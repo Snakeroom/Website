@@ -3,9 +3,12 @@ module.exports = {
 	mode: process.env.WEBPACK_MODE || "production",
 	module: {
 		rules: [{
-			test: /\.jsx$/,
-			use: "jsx-loader",
+			test: /\.jsx?$/,
+			loader: "babel-loader"
 		}],
+	},
+	optimization: {
+		usedExports: true,
 	},
 	output: {
 		filename: "index.js",

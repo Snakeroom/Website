@@ -9,9 +9,12 @@
 		"website"
 	],
 	"devDependencies": {
+		"@babel/core": "^7.9.0",
+		"@babel/preset-env": "^7.9.0",
+		"@babel/preset-react": "^7.9.1",
+		"babel-loader": "^8.1.0",
 		"file-loader": "^6.0.0",
 		"html-minify-loader": "^1.4.0",
-		"jsx-loader": "^0.13.2",
 		"webpack": "^4.42.0",
 		"webpack-cli": "^3.3.11"
 	},
@@ -25,5 +28,11 @@
 	"bugs": {
 		"url": "https://github.com/Snakeroom/Website/issues"
 	},
-	"homepage": "https://github.com/Snakeroom/Website#readme"
+	"homepage": "https://github.com/Snakeroom/Website#readme",
+	"babel": {
+		"presets": [
+			"@babel/preset-env",
+			"@babel/preset-react"
+		]
+	}
 }
