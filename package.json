@@ -1,4 +1,13 @@
 {
+	"name": "@snakeroom/website",
+	"description": "The website for the Snakeroom.",
+	"version": "1.0.0",
+	"author": "haykam821",
+	"license": "MIT",
+	"main": "./src/index.jsx",
+	"keywords": [
+		"website"
+	],
 	"devDependencies": {
 		"file-loader": "^6.0.0",
 		"html-minify-loader": "^1.4.0",
@@ -8,5 +17,13 @@
 	},
 	"scripts": {
 		"build": "webpack --config webpack.config.js"
-	}
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Snakeroom/Website.git"
+	},
+	"bugs": {
+		"url": "https://github.com/Snakeroom/Website/issues"
+	},
+	"homepage": "https://github.com/Snakeroom/Website#readme"
 }
