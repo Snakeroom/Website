@@ -111,40 +111,29 @@ const FooterContent = styled.div`
 	justify-content: space-between;
 `;
 
-const FooterCredit = styled.div`
-	align-items: center;
-	display: flex;
+const FooterCredit = styled.p`
 	margin-right: 1rem;
 `;
 
-const FooterLinks = styled.div`
-	display: flex;
-
-	a:not(:last-of-type)::after {
-		content: " — ";
-		margin: 0 0.25rem;
-	}
-`;
+const FooterLinks = styled.p``;
 
 const Footer = () => (
 	<FooterContainer>
 		<FooterLogo />
 		<FooterContent>
 			<FooterCredit>
-				<p>
-					&copy; 2020{" "}
-					<Link href="https://github.com/Snakeroom/Website/blob/master/LICENSE">
-						snakeroom.org contributors
-					</Link>
-				</p>
+				&copy; 2020{" "}
+				<Link href="https://github.com/Snakeroom/Website/blob/master/LICENSE">
+					snakeroom.org contributors
+				</Link>
 			</FooterCredit>
 			<FooterLinks>
-				<Link href="https://discord.gg/CNahEjU">Discord</Link>
-				<Link href="https://github.com/Snakeroom">GitHub</Link>
-				<Link href="https://www.reddit.com/r/snakeroomalliance/">
+				<Link href="https://discord.gg/CNahEjU">Discord</Link> —{" "}
+				<Link href="https://github.com/Snakeroom">GitHub</Link> —{" "}
+				<Link href="https://reddit.com/r/snakeroomalliance">
 					Reddit
-				</Link>
-				<Link href="https://twitter.com/snekroom">Twitter</Link>
+				</Link>{" "}
+				— <Link href="https://twitter.com/snekroom">Twitter</Link>
 			</FooterLinks>
 		</FooterContent>
 	</FooterContainer>
