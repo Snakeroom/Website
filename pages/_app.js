@@ -10,9 +10,6 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 
-const FONT_URL =
-	"https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap";
-
 const App = ({ Component, pageProps }) => {
 	const [theme, setTheme] = useTheme();
 
@@ -32,14 +29,9 @@ const App = ({ Component, pageProps }) => {
 				/>
 				<meta name="theme-color" content={theme.colors.background} />
 				<link
-					rel="preload"
-					href={FONT_URL}
-					as="style"
-					onLoad="this.onload=null;this.rel='stylesheet'"
+					rel="stylesheet"
+					href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
 				/>
-				<noscript>
-					<link rel="stylesheet" href={FONT_URL} />
-				</noscript>
 			</Head>
 			<GlobalStyle />
 			<ThemeContext.Provider value={[theme, setTheme]}>
