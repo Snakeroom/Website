@@ -1,46 +1,16 @@
 {
-	"name": "@snakeroom/website",
-	"description": "The website for the Snakeroom.",
-	"version": "1.0.0",
-	"author": "haykam821",
-	"license": "MIT",
-	"main": "./src/index.jsx",
-	"keywords": [
-		"website"
-	],
-	"devDependencies": {
-		"@babel/core": "^7.9.0",
-		"@babel/preset-env": "^7.9.0",
-		"@babel/preset-react": "^7.9.1",
-		"babel-loader": "^8.1.0",
-		"file-loader": "^6.0.0",
-		"html-minify-loader": "^1.4.0",
-		"webpack": "^4.42.0",
-		"webpack-cli": "^3.3.11"
-	},
-	"scripts": {
-		"build": "webpack --config webpack.config.js"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/Snakeroom/Website.git"
-	},
-	"bugs": {
-		"url": "https://github.com/Snakeroom/Website/issues"
-	},
-	"homepage": "https://github.com/Snakeroom/Website#readme",
-	"dependencies": {
-		"@fortawesome/fontawesome-svg-core": "^1.2.27",
-		"@fortawesome/free-brands-svg-icons": "^5.12.1",
-		"@fortawesome/react-fontawesome": "^0.1.9",
-		"react": "^16.13.1",
-		"react-dom": "^16.13.1",
-		"styled-components": "^5.0.1"
-	},
-	"babel": {
-		"presets": [
-			"@babel/preset-env",
-			"@babel/preset-react"
-		]
-	}
+  "name": "snakeroom.org",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "next": "9.3.2",
+    "prettier": "^2.0.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  }
 }
