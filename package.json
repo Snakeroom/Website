@@ -1,16 +1,30 @@
 {
-  "name": "snakeroom.org",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "9.3.2",
-    "prettier": "^2.0.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1"
-  }
+	"name": "snakeroom.org",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "eslint --fix ."
+	},
+	"dependencies": {
+		"next": "9.3.2",
+		"react": "16.13.1",
+		"react-dom": "16.13.1",
+		"styled-components": "^5.0.1"
+	},
+	"devDependencies": {
+		"babel-plugin-inline-react-svg": "^1.1.1",
+		"babel-plugin-styled-components": "^1.10.7",
+		"eslint": "^6.8.0",
+		"eslint-config-airbnb": "^18.1.0",
+		"eslint-config-prettier": "^6.10.1",
+		"eslint-plugin-import": "^2.20.1",
+		"eslint-plugin-jsx-a11y": "^6.2.3",
+		"eslint-plugin-prettier": "^3.1.2",
+		"eslint-plugin-react": "^7.19.0",
+		"eslint-plugin-react-hooks": "^2.5.1",
+		"prettier": "^2.0.2"
+	}
 }
