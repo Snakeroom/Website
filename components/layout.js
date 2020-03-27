@@ -87,21 +87,66 @@ const Header = () => (
 	</HeaderContainer>
 );
 
+const FooterLogo = styled(Logo)`
+	filter: grayscale();
+	margin-right: 1rem;
+	opacity: 0.5;
+	width: 2rem;
+`;
+
 const FooterContainer = styled.footer`
-	color: ${(props) => props.theme.colors.muted};
+	align-items: center;
+	background: ${(props) => props.theme.colors.backgroundMuted};
+	color: ${(props) => props.theme.colors.primaryMuted};
 	display: flex;
+	min-height: 5rem;
 	padding: 1rem;
+`;
+
+const FooterContent = styled.div`
+	margin-left: auto;
+	display: flex;
+	flex: 1;
+	flex-wrap: wrap;
+	justify-content: space-between;
+`;
+
+const FooterCredit = styled.div`
+	align-items: center;
+	display: flex;
+	margin-right: 1rem;
+`;
+
+const FooterLinks = styled.div`
+	display: flex;
+
+	a:not(:last-of-type)::after {
+		content: " — ";
+		margin: 0 0.25rem;
+	}
 `;
 
 const Footer = () => (
 	<FooterContainer>
-		<p>
-			&copy; 2020{" "}
-			<Link href="https://github.com/Snakeroom/Website/blob/master/LICENSE">
-				snakeroom.org contributors
-			</Link>
-		</p>
-		<DiscordNag />
+		<FooterLogo />
+		<FooterContent>
+			<FooterCredit>
+				<p>
+					&copy; 2020{" "}
+					<Link href="https://github.com/Snakeroom/Website/blob/master/LICENSE">
+						snakeroom.org contributors
+					</Link>
+				</p>
+			</FooterCredit>
+			<FooterLinks>
+				<Link href="https://discord.gg/CNahEjU">Discord</Link>
+				<Link href="https://github.com/Snakeroom">GitHub</Link>
+				<Link href="https://www.reddit.com/r/snakeroomalliance/">
+					Reddit
+				</Link>
+				<Link href="https://twitter.com/snekroom">Twitter</Link>
+			</FooterLinks>
+		</FooterContent>
 	</FooterContainer>
 );
 
@@ -116,12 +161,16 @@ const PageContainer = styled.main`
 	flex: 1;
 	flex-direction: column;
 	padding: 1rem 2rem;
+	position: relative;
 `;
 
 const Layout = ({ children }) => (
 	<LayoutContainer>
 		<Header />
-		<PageContainer>{children}</PageContainer>
+		<PageContainer>
+			{children}
+			<DiscordNag />
+		</PageContainer>
 		<Footer />
 	</LayoutContainer>
 );
