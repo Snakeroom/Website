@@ -1,4 +1,4 @@
-import Document from "next/document";
+import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
 // https://github.com/zeit/next.js/tree/master/examples/with-styled-components
@@ -27,5 +27,17 @@ export default class SnekDocument extends Document {
 		} finally {
 			sheet.seal();
 		}
+	}
+
+	render() {
+		return (
+			<Html lang="en" style={{ background: "#121212" }}>
+				<Head />
+				<body>
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		);
 	}
 }
