@@ -15,12 +15,17 @@ const StyledAnchor = styled.a`
 	${(props) => props.active && "font-weight: bold;"}
 `;
 
-const Link = ({ active, children, className, ...props }) => (
-	<NextLink {...props} passHref>
-		<StyledAnchor active={active} className={className}>
+const Link = ({ active, children, className, href, ...props }) =>
+	href[0] === "/" ? (
+		<NextLink {...props} href={href} passHref>
+			<StyledAnchor active={active} className={className}>
+				{children}
+			</StyledAnchor>
+		</NextLink>
+	) : (
+		<StyledAnchor active={active} className={className} href={href}>
 			{children}
 		</StyledAnchor>
-	</NextLink>
-);
+	);
 
 export default Link;
