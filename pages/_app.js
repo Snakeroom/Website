@@ -28,6 +28,10 @@ const App = ({ Component, pageProps }) => {
 					content="width=device-width, initial-scale=1, shrink-to-fit=no"
 				/>
 				<meta name="theme-color" content={theme.colors.background} />
+				<link
+					rel="apple-touch-icon"
+					href="/icons/apple-touch-icon.png"
+				/>
 				<link rel="manifest" href="/manifest.json" />
 				<link
 					rel="stylesheet"
