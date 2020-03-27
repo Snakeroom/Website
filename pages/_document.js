@@ -31,9 +31,9 @@ export default class SnekDocument extends Document {
 
 	render() {
 		return (
-			<Html lang="en" style={{ background: "#121212" }}>
+			<Html lang="en">
 				<Head />
-				<body>
+				<body style={{ background: "#121212" }}>
 					<Main />
 					<NextScript />
 				</body>
