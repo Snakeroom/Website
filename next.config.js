@@ -1,6 +1,10 @@
 const withImages = require("next-images");
-module.exports = withImages({
-	devIndicators: {
-		autoPrerender: false,
-	},
-});
+const withOffline = require("next-offline");
+
+module.exports = withImages(
+	withOffline({
+		devIndicators: {
+			autoPrerender: false,
+		},
+	})
+);
