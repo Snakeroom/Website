@@ -13,7 +13,6 @@ const StyledButton = styled.button`
 
 	.svg-inline--fa {
 		height: 1rem;
-		margin-right: 0.5rem;
 		width: 1rem;
 
 		path {
