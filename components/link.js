@@ -7,7 +7,6 @@ const StyledAnchor = styled.a`
 	text-decoration: none;
 
 	&:hover,
-	&:focus,
 	&:active {
 		text-decoration: underline;
 	}
