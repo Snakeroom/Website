@@ -12,6 +12,7 @@ const StyledAnchor = styled.a`
 	color: #fff;
 	display: flex;
 	flex: 0;
+	margin-right: -1rem;
 	margin-top: auto;
 	padding: 0.5rem;
 	position: sticky;
