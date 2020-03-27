@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styled from "styled-components";
-import Logo from "../public/logo.svg";
+import Logo from "../components/logo";
 
 const StyledLogo = styled(Logo)`
 	filter: grayscale();

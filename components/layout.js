@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Logo from "../public/logo.svg";
+import Logo from "../components/logo";
 import Link from "./link";
 import DiscordNag from "./discord-nag";
 import ThemeSwitcher from "./theme-switcher";
@@ -77,7 +77,7 @@ const Header = () => (
 					<HeaderNavLink href="/history">History</HeaderNavLink>
 				</li>
 				<li>
-					<HeaderNavLink href="/history">Sneknet</HeaderNavLink>
+					<HeaderNavLink href="/sneknet">Sneknet</HeaderNavLink>
 				</li>
 				<li>
 					<ThemeSwitcher />
