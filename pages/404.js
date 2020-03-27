@@ -4,6 +4,7 @@ import Logo from "../public/logo.svg";
 const StyledLogo = styled(Logo)`
 	filter: grayscale();
 	margin-top: 1rem;
+	opacity: 0.5;
 	width: 8rem;
 `;
 
@@ -16,7 +17,7 @@ const Container = styled.div`
 const Title = styled.h1`
 	align-items: center;
 	align-self: center;
-	color: ${(props) => props.theme.colors.muted};
+	color: ${(props) => props.theme.colors.primaryMuted};
 	display: flex;
 	flex-direction: column;
 	font-weight: normal;
