@@ -4,15 +4,17 @@ import styled from "styled-components";
 
 const StyledAnchor = styled.a`
 	align-items: center;
+	align-self: flex-end;
 	background: #7289da;
 	bottom: 1rem;
 	border-radius: 0.25rem;
 	box-shadow: 0px 2px 8px 0 rgba(0, 0, 0, 0.25);
 	color: #fff;
 	display: flex;
+	flex: 0;
+	margin-top: auto;
 	padding: 0.5rem;
-	position: fixed;
-	right: 1rem;
+	position: sticky;
 	text-decoration: none;
 	transition: all 0.25s;
 
