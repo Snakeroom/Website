@@ -29,7 +29,7 @@ const ThemeSwitcher = () => {
 	};
 
 	return (
-		<StyledButton onClick={toggleTheme}>
+		<StyledButton onClick={toggleTheme} aria-label="Toggle dark mode">
 			<FontAwesomeIcon
 				icon={theme.name === "light" ? faMoonRegular : faMoonSolid}
 			/>
