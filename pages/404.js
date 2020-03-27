@@ -1,3 +1,4 @@
+import Head from "next/head";
 import styled from "styled-components";
 import Logo from "../public/logo.svg";
 
@@ -24,9 +25,14 @@ const Title = styled.h1`
 `;
 
 export default () => (
-	<Container>
-		<Title>
-			Page not found. <StyledLogo />
-		</Title>
-	</Container>
+	<>
+		<Head>
+			<title>Not Found - The Snakeroom</title>
+		</Head>
+		<Container>
+			<Title>
+				Page not found. <StyledLogo />
+			</Title>
+		</Container>
+	</>
 );
