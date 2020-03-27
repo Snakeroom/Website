@@ -17,6 +17,8 @@ We follow [Chris Beams' git commit style guide](https://chris.beams.io/posts/git
 
 We use Prettier and ESLint to enforce code style. Make sure to run `npm run lint` before commit to lint and autofix your changes. (or install the respective editor plugins for lint/format-on-save)
 
+If your PR contains significant code changes (e.g. not just fixing a typo), add your name to the `LICENSE` file.
+
 ## Production
 
 The repo is automatically deployed to Netlify upon commit to `master`.
