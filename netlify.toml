@@ -2,6 +2,3 @@
   base = "."
   command = "npm run export"
   publish = "out"
-
-[[plugins]]
-package = "netlify-plugin-cache-nextjs"
