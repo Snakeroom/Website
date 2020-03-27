@@ -66,7 +66,7 @@ const Header = () => (
 	<HeaderContainer>
 		<HeaderLink href="/">
 			<HeaderLogo />
-			<HeaderTitle>The Snakeroom</HeaderTitle>
+			<HeaderTitle>Snakeroom</HeaderTitle>
 		</HeaderLink>
 		<HeaderNav>
 			<ul>
@@ -115,7 +115,7 @@ const PageContainer = styled.main`
 	display: flex;
 	flex: 1;
 	flex-direction: column;
-	padding: 1rem;
+	padding: 1rem 2rem;
 `;
 
 const Layout = ({ children }) => (
