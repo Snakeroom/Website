@@ -4,6 +4,11 @@ import { ThemeProvider } from "styled-components";
 import useTheme from "../lib/hooks/useTheme";
 import Layout from "../components/layout";
 import GlobalStyle from "../lib/global-style";
+import { ThemeContext } from "../lib/theme";
+
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
 
 const App = ({ Component, pageProps }) => {
 	const [theme, setTheme] = useTheme();
@@ -21,9 +26,11 @@ const App = ({ Component, pageProps }) => {
 				/>
 			</Head>
 			<GlobalStyle />
-			<Layout>
-				<Component {...pageProps} />
-			</Layout>
+			<ThemeContext.Provider value={[theme, setTheme]}>
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
+			</ThemeContext.Provider>
 		</ThemeProvider>
 	);
 };
