@@ -1,0 +1,22 @@
+{
+	"name": "The Snakeroom",
+	"short_name": "Snakeroom",
+	"description": "The Snakeroom is an organization dedicated to solving and discussing Reddit's yearly April Fools events and official Reddit-run ARGs — both before and while they happen.",
+	"icons": [
+		{
+			"src": "/icons/icon-192.png",
+			"type": "image/png",
+			"sizes": "192x192"
+		},
+		{
+			"src": "/icons/icon-512.png",
+			"type": "image/png",
+			"sizes": "512x512"
+		}
+	],
+	"display": "standalone",
+	"scope": "/",
+	"start_url": "/?manifest=true",
+	"background_color": "#121212",
+	"theme_color": "#121212"
+}
