@@ -34,7 +34,7 @@ export default () => (
 		<Head>
 			<title>Sneknet - The Snakeroom</title>
 		</Head>
-		<BoldButton href="https://api.snakeroom.org/identity/reddit/login?return_to=https%3A%2F%2Fsnakeroom.org%2F%2Fsneknet">
+		<BoldButton href="https://api.snakeroom.org/identity/reddit/login?return_to=https%3A%2F%2Fsnakeroom.org%2Fsneknet">
 			<FontAwesomeIcon icon={faLock} />
 			Log in to Sneknet
 		</BoldButton>
