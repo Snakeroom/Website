@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import Logo from "../components/logo";
+import Logo from "./logo";
 import Link from "./link";
 import DiscordNag from "./discord-nag";
 import ThemeSwitcher from "./theme-switcher";
+import AccountDropdown from "./account-dropdown";
 
 const HeaderContainer = styled.header`
 	align-items: center;
@@ -46,6 +47,10 @@ const HeaderNav = styled.nav`
 		margin-left: 1rem;
 	}
 
+	li:last-child > *:not(:last-child) {
+		margin-right: 0.7rem;
+	}
+
 	@media (max-width: 600px) {
 		flex-direction: column;
 		margin-left: 0;
@@ -81,6 +86,7 @@ const Header = () => (
 				</li>
 				<li>
 					<ThemeSwitcher />
+					<AccountDropdown />
 				</li>
 			</ul>
 		</HeaderNav>

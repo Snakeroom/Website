@@ -2,24 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMoon as faMoonRegular } from "@fortawesome/free-regular-svg-icons";
 import { faMoon as faMoonSolid } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
-import styled from "styled-components";
 import { ThemeContext } from "../lib/theme";
-
-const StyledButton = styled.button`
-	background: none;
-	border: 0;
-	cursor: pointer;
-	outline: 0;
-
-	.svg-inline--fa {
-		height: 1rem;
-		width: 1rem;
-
-		path {
-			fill: ${(props) => props.theme.colors.primary};
-		}
-	}
-`;
+import HeaderButton from "./header-button";
 
 const ThemeSwitcher = () => {
 	const [theme, setTheme] = useContext(ThemeContext);
@@ -29,11 +13,11 @@ const ThemeSwitcher = () => {
 	};
 
 	return (
-		<StyledButton onClick={toggleTheme} aria-label="Toggle dark mode">
+		<HeaderButton onClick={toggleTheme} aria-label="Toggle dark mode">
 			<FontAwesomeIcon
 				icon={theme.name === "light" ? faMoonRegular : faMoonSolid}
 			/>
-		</StyledButton>
+		</HeaderButton>
 	);
 };
 
