@@ -134,12 +134,12 @@ const Footer = () => (
 				</Link>
 			</FooterCredit>
 			<FooterLinks>
-				<Link href="https://discord.gg/CNahEjU">Discord</Link> —{" "}
-				<Link href="https://github.com/Snakeroom">GitHub</Link> —{" "}
-				<Link href="https://reddit.com/r/snakeroomalliance">
+				<Link href="https://discord.gg/CNahEjU" title="discord.gg/CNahEjU">Discord</Link> —{" "}
+				<Link href="https://github.com/Snakeroom" title="@Snakeroom">GitHub</Link> —{" "}
+				<Link href="https://reddit.com/r/snakeroomalliance" title="r/snakeroomalliance">
 					Reddit
 				</Link>{" "}
-				— <Link href="https://twitter.com/snekroom">Twitter</Link>
+				— <Link href="https://twitter.com/snekroom" title="@snekroom">Twitter</Link>
 			</FooterLinks>
 		</FooterContent>
 	</FooterContainer>
