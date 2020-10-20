@@ -1,17 +1,38 @@
 import Head from "next/head";
 
+import { useEffect, useReducer } from "react";
 import { ThemeProvider } from "styled-components";
-import useTheme from "../lib/hooks/useTheme";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
 import Layout from "../components/layout";
 import GlobalStyle from "../lib/global-style";
 import { ThemeContext } from "../lib/theme";
+import { authReducer } from "../lib/ducks/auth";
+import useTheme from "../lib/hooks/useTheme";
+import { StateContext } from "../lib/state";
+import { makeApiRequest } from "../lib/api";
 
-import { config } from "@fortawesome/fontawesome-svg-core";
-import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 
 const App = ({ Component, pageProps }) => {
 	const [theme, setTheme] = useTheme();
+	const [userState, dispatch] = useReducer(authReducer, {});
+
+	useEffect(() => {
+		makeApiRequest("/identity/@me")
+			.then((res) => res.json().then((data) => ({ data, ok: res.ok })))
+			.then(({ data, ok }) => {
+				if (ok) {
+					dispatch({ type: "restore", user: data });
+				} else {
+					throw new Error(data.error);
+				}
+			})
+			.catch(() => {
+				// Ignore for now. Flash warning in future?
+			});
+	}, []);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -40,9 +61,11 @@ const App = ({ Component, pageProps }) => {
 			</Head>
 			<GlobalStyle />
 			<ThemeContext.Provider value={[theme, setTheme]}>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
+				<StateContext.Provider value={userState}>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</StateContext.Provider>
 			</ThemeContext.Provider>
 		</ThemeProvider>
 	);
