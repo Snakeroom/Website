@@ -25,7 +25,7 @@ export default () => (
 			<br />
 			RPAN is a streaming event with a cap on streamers and length.
 			Snakeroom creates scripts that snipe slots and allow the user to
-			broadcast from an obs stream, bypassing the intended limitation of
+			broadcast from an OBS stream, bypassing the intended limitation of
 			streaming from a mobile device and allowing Snakeroom members to
 			create &quot;Place In RPAN&quot; and &quot;RPAN Plays Pokemon&quot;.
 			They also begin streaming before the event is live, though quickly
