@@ -38,7 +38,7 @@ export default () => (
 			gifs are strung together into a video. The Snakeroom creates Sneknet
 			V2. The new extension accepts a link to a gif on the backend and
 			then selects this gif for all users running the extension, locking
-			in gif choices without chancing success on the whims of Reddit.
+			in GIF choices without chancing success on the whims of Reddit.
 			<br />
 			<br />
 			<strong>April 2018 - Circle of Trust</strong>
