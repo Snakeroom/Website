@@ -44,7 +44,7 @@ export default () => (
 			<strong>April 2018 - Circle of Trust</strong>
 			<br />
 			In Circle of Trust, users create a circle. Each circle has a
-			passcode, a user not in the circle can use the passcode to join or
+			passcode; a user not in the circle can use the passcode to join or
 			betray. Joining enlarges the circle, while betraying ends it. The
 			Snakeroom creates the first Sneknet, a browser extension to automate
 			the event. The extension automatically joins a circle from a command
