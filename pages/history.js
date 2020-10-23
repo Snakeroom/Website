@@ -34,7 +34,7 @@ export default () => (
 			<br />
 			<strong>April 2019 - Sequence</strong>
 			<br />
-			During sequence, users upload and vote on gifs. The most upvoted
+			During Sequence, users upload and vote on GIFs. The most upvoted
 			GIFs are strung together into a video. The Snakeroom creates Sneknet
 			V2. The new extension accepts a link to a GIF on the backend and
 			then selects this GIF for all users running the extension, locking
