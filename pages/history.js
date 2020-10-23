@@ -4,6 +4,7 @@ import styled from "styled-components";
 const Body = styled.p`
 	font-size: 1.5rem;
 	text-align: center;
+	max-width: 90rem;
 `;
 
 export default () => (
@@ -14,10 +15,10 @@ export default () => (
 		<Body>
 			<strong>April 2020 - Imposter</strong>
 			<br />
-			Imposter is a Turing Test, the player receives four messages from
-			Redditors and one from a bot and must determine which message is the
-			bot. Sneknet V3 uses a database of previously collected answers to
-			show the user if each answer is a human or a bot. It also
+			Imposter is a Turing Test where the player receives four messages
+			from Redditors and one from a bot and must determine which message
+			is the bot. Sneknet V3 uses a database of previously collected
+			answers to show the user if each answer is a human or a bot. It also
 			automatically selects if the correct answer is known.
 			<br />
 			<br />
