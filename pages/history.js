@@ -27,7 +27,7 @@ export default () => (
 			Snakeroom creates scripts that snipe slots and allow the user to
 			broadcast from an OBS stream, bypassing the intended limitation of
 			streaming from a mobile device and allowing Snakeroom members to
-			create &quot;Place In RPAN&quot; and &quot;RPAN Plays Pokemon&quot;.
+			create &quot;Place Live&quot; and &quot;RPAN Plays Pokémon&quot;.
 			They also begin streaming before the event is live, though quickly
 			shut down by Reddit admins.
 			<br />
