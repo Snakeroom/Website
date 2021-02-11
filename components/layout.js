@@ -136,10 +136,7 @@ const Footer = () => (
 			<FooterLinks>
 				<Link href="https://discord.gg/CNahEjU">Discord</Link> —{" "}
 				<Link href="https://github.com/Snakeroom">GitHub</Link> —{" "}
-				<Link href="https://reddit.com/r/snakeroomalliance">
-					Reddit
-				</Link>{" "}
-				— <Link href="https://twitter.com/snekroom">Twitter</Link>
+				<Link href="https://reddit.com/r/snakeroomalliance">Reddit</Link>
 			</FooterLinks>
 		</FooterContent>
 	</FooterContainer>
