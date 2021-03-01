@@ -20,6 +20,15 @@ const EventsContainer = styled.div`
 
 		max-width: 35%;
 	}
+
+	@media (max-width: 800px) {
+		flex-direction: column;
+
+		& > * {
+			flex-basis: 100%;
+			max-width: unset;
+		}
+	}
 `;
 
 export default () => (
