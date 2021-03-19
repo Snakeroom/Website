@@ -47,13 +47,13 @@ export default () => (
 			</Event>
 			<Event icon={faVideo} name="RPAN" time="August 2019">
 				RPAN is a streaming event with a cap on streamers and length.
-				Before its initial launch week, the Snakeroom used a script that
+				The Snakeroom was able to stream before its initial launch 
+				although Reddit admins quickly shut this down. 
+				Once the event went live, the Snakeroom used a script that 
 				sniped slots and allowed users to broadcast from an OBS stream,
 				bypassing the intended limitation of streaming from a mobile
 				device and allowing Snakeroom members to create 
 				&quot;Place Live&quot; and &quot;RPAN Plays Pokémon&quot;.
-				stream prior to the event going live, although Reddit admins
-				quickly shut this down.
 			</Event>
 			<Event icon={faRandom} name="Sequence" time="April 2019">
 				During this event, players were able to upload and vote on GIFs,
