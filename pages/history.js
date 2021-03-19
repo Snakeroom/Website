@@ -81,7 +81,7 @@ export default () => (
 				name="Snakeroom Begins"
 				time="March 2018"
 			>
-				In the leadup to Circle of Trust, the community founded the
+				In the leadup to Circle of Trust, the community founded The
 				Snakeroom Alliance after discovering the subreddit
 				r/snakeroomtest, with many believing it to be part of the event.
 				Eventually, the name was shortened to simply The Snakeroom and a
