@@ -50,9 +50,8 @@ export default () => (
 				Before its initial launch week, the Snakeroom used a script that
 				sniped slots and allowed users to broadcast from an OBS stream,
 				bypassing the intended limitation of streaming from a mobile
-				device and allowing Snakeroom members to create{" "}
-				<strong>Place Live</strong> and{" "}
-				<strong>RPAN Plays Pokémon</strong>. They were also able to
+				device and allowing Snakeroom members to create 
+				&quot;Place Live&quot; and &quot;RPAN Plays Pokémon&quot;.
 				stream prior to the event going live, although Reddit admins
 				quickly shut this down.
 			</Event>
