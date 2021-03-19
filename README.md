@@ -19,6 +19,8 @@ We use Prettier and ESLint to enforce code style. Make sure to run `npm run lint
 
 If your PR contains significant code changes (e.g. not just fixing a typo), add your name to the `LICENSE` file.
 
+When merging pull requests, merge commits should be used rather than squashing or rebasing.
+
 ## Production
 
 The repo is automatically deployed to Netlify upon commit to `master`.
