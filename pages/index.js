@@ -4,10 +4,11 @@ import styled from "styled-components";
 const Hero = styled.div``;
 
 const Blurb = styled.p`
-	font-size: 2rem;
+	font-size: 3.5rem;
 	margin-left: auto;
-	max-width: 28rem;
-	text-align: right;
+	margin-right: auto;
+	max-width: 60rem;
+	text-align: center;
 `;
 
 export default () => (
