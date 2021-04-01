@@ -25,7 +25,7 @@ const SubmitButton = styled(StyledInput)`
 	}
 `;
 
-export default () => {
+export default ({ dispatch }) => {
 	const router = useRouter();
 
 	function submitForm(e) {
@@ -50,6 +50,7 @@ export default () => {
 			credentials: "include",
 		})
 			.then(() => {
+				dispatch({ type: "mark" });
 				return router.push("/account");
 			})
 			.catch((err) => {

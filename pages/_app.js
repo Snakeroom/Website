@@ -17,9 +17,18 @@ config.autoAddCss = false;
 
 const App = ({ Component, pageProps }) => {
 	const [theme, setTheme] = useTheme();
-	const [userState, dispatch] = useReducer(authReducer, {});
+	const [userState, dispatch] = useReducer(authReducer, {
+		outdated: true,
+	});
+
+	const props = {
+		...pageProps,
+		dispatch,
+	};
 
 	useEffect(() => {
+		if (!userState.outdated) return;
+
 		makeApiRequest("/identity/@me")
 			.then((res) => res.json().then((data) => ({ data, ok: res.ok })))
 			.then(({ data, ok }) => {
@@ -32,7 +41,7 @@ const App = ({ Component, pageProps }) => {
 			.catch(() => {
 				// Ignore for now. Flash warning in future?
 			});
-	}, []);
+	}, [userState.outdated]);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -63,7 +72,7 @@ const App = ({ Component, pageProps }) => {
 			<ThemeContext.Provider value={[theme, setTheme]}>
 				<StateContext.Provider value={userState}>
 					<Layout>
-						<Component {...pageProps} />
+						<Component {...props} />
 					</Layout>
 				</StateContext.Provider>
 			</ThemeContext.Provider>
