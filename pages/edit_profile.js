@@ -1,29 +1,9 @@
 import Head from "next/head";
-import styled from "styled-components";
 import { useRouter } from "next/router";
 import { API_BASE } from "../lib/api";
 import { Box, PageTitle } from "../lib/common-style";
 import { StateContext } from "../lib/state";
-
-const StyledInput = styled.input`
-	border: 1px solid ${(props) => props.theme.colors.primary};
-	border-radius: 2px;
-	margin: 10px 0;
-	padding: 10px;
-	display: block;
-`;
-
-const SubmitButton = styled(StyledInput)`
-	cursor: pointer;
-	transition: background-color 0.25s, color 0.25s;
-	background-color: ${(props) => props.theme.colors.primary};
-	color: ${(props) => props.theme.colors.background};
-
-	&:hover {
-		background-color: ${(props) => props.theme.colors.background};
-		color: ${(props) => props.theme.colors.primary};
-	}
-`;
+import SubmitButton from "../components/submit-button";
 
 export default ({ dispatch }) => {
 	const router = useRouter();
@@ -87,8 +67,7 @@ export default ({ dispatch }) => {
 						<Box>
 							<PageTitle>Not signed in!</PageTitle>
 						</Box>
-					)
-				}
+					)}
 			</StateContext.Consumer>
 		</>
 	);

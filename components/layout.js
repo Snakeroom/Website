@@ -82,6 +82,9 @@ const Header = () => (
 					<HeaderNavLink href="/history">History</HeaderNavLink>
 				</li>
 				<li>
+					<HeaderNavLink href="/projects">Projects</HeaderNavLink>
+				</li>
+				<li>
 					<HeaderNavLink href="/sneknet">Sneknet</HeaderNavLink>
 				</li>
 				<li>
