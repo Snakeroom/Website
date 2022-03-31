@@ -39,7 +39,13 @@ export default () => (
 		</Head>
 		<EventsContainer>
 			<Event icon={faMedal} name="Second" time="April 2021">
-				In Second, all players received the same set of three images on which to vote in lightening rounds.  In each round, those who voted for the second-place image the fastest got the most points.  Those who voted for the first-place image received nothing.  The fourth iteration of the Sneknet automatically placed votes on images most likely to be voted second place, allowing our users to climb up the leaderboard.
+				In Second, all players received the same set of three images on
+				which to vote in lightening rounds.  In each round, those who voted
+				for the second-place image the fastest got the most points.  Those
+				who voted for the first-place image received nothing.  The fourth
+				iteration of the Sneknet automatically placed votes on images most
+				likely to be voted second place, allowing our users to climb up the
+				leaderboard.
 			</Event>
 			<Event icon={faMask} name="Imposter" time="April 2020">
 				In this event, players received four messages by other players
