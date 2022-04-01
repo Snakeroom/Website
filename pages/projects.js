@@ -26,7 +26,7 @@ const ProjectPreview = ({ project }) => {
 			{typeof project.members === "number" && (
 				<p>{project.members} members</p>
 			)}
-			{typeof project.numbers === "boolean" && (
+			{typeof project.joined === "boolean" && (
 				<SubmitButton
 					type="submit"
 					value={project.joined ? "Leave" : "Join"}
