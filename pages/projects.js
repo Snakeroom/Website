@@ -20,30 +20,79 @@ const ProjectCard = styled.div`
 	border-radius: 8px;
 `;
 
+class MembershipStatus {
+	static Joining = new MembershipStatus("Joining...");
+	static Joined = new MembershipStatus("Joined");
+	static Leaving = new MembershipStatus("Leaving...");
+	static NotJoined = new MembershipStatus("Not Joined");
+	static Unknown = new MembershipStatus("Unknown");
+
+	constructor(text) {
+		this.text = text;
+	}
+}
+
 const ProjectPreview = ({ project }) => {
-	const toggleProjectMembership = async (event) => {
+	let initialMembershipStatus = undefined;
+	if (typeof project.joined === "boolean") {
+		initialMembershipStatus = project.joined ? MembershipStatus.Joined : MembershipStatus.NotJoined;
+	}
+	const [membershipStatus, setMembershipStatus] = useState(initialMembershipStatus);
+
+	const makeMembershipRequest = async (method) => {
+		return makeApiRequest(`/y22/projects/${project.uuid}/membership`, {
+			method: method,
+		})
+			.then((res) => res.json())
+			.catch((err) => err);
+	}
+
+	const joinProject = async (event) => {
 		event.preventDefault();
 
-		makeApiRequest(`/y22/projects/${project.uuid}/membership`, {
-			method: project.joined ? "DELETE" : "PUT",
-		});
+		setMembershipStatus(MembershipStatus.Joining);
 
-		// This is gross and pain.
-		Router.reload(window.location.pathname);
+		const joinResult = await makeMembershipRequest("PUT")
+
+		if (joinResult.message === "OK") {
+			setMembershipStatus(MembershipStatus.Joined);
+		} else {
+			setMembershipStatus(MembershipStatus.NotJoined);
+		}
 	};
+
+	const leaveProject = async (event) => {
+		event.preventDefault();
+
+		setMembershipStatus(MembershipStatus.Leaving);
+
+		const leaveResult = await makeMembershipRequest("DELETE")
+
+		if (leaveResult.message === "OK") {
+			setMembershipStatus(MembershipStatus.NotJoined);
+		} else {
+			setMembershipStatus(MembershipStatus.Joined);
+		}
+	}
 
 	return (
 		<ProjectCard>
 			<h3>{project.name || "Unnamed Project"}</h3>
-			<p>Project Joined: &apos;{`${project.joined}`}&apos;</p>
+			{typeof membershipStatus === "object" && (
+				<p>Membership Status: {`${membershipStatus.text}`}</p>
+			)}
 			{typeof project.members === "number" && (
 				<p>{project.members} members</p>
 			)}
-			{typeof project.joined === "boolean" && (
-				<form onSubmit={toggleProjectMembership}>
+			{typeof membershipStatus === "object" && (
+				<form onSubmit={membershipStatus === MembershipStatus.Joined ? leaveProject : joinProject}>
 					<SubmitButton
 						type="submit"
-						value={project.joined ? "Leave" : "Join"}
+						value={
+							membershipStatus === MembershipStatus.Joined ?
+							"Leave" : membershipStatus === MembershipStatus.NotJoined ?
+							"Join" : "Error"
+						}
 					/>
 				</form>
 			)}
