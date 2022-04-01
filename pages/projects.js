@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Router from "next/router";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { PageTitle } from "../lib/common-style";
@@ -19,19 +20,86 @@ const ProjectCard = styled.div`
 	border-radius: 8px;
 `;
 
+class MembershipStatus {
+	static Joining = new MembershipStatus("Joining...");
+	static Joined = new MembershipStatus("Joined");
+	static Leaving = new MembershipStatus("Leaving...");
+	static NotJoined = new MembershipStatus("Not Joined");
+	static Unknown = new MembershipStatus("Unknown");
+
+	constructor(text) {
+		this.text = text;
+	}
+}
+
 const ProjectPreview = ({ project }) => {
+
+	const initialMembershipStatus = () => {
+		if (typeof project.joined === "boolean") {
+			return project.joined ? MembershipStatus.Joined : MembershipStatus.NotJoined;
+		} else {
+			return MembershipStatus.Unknown;
+		}
+	}
+
+	const [membershipStatus, setMembershipStatus] = useState(initialMembershipStatus);
+
+	const makeMembershipRequest = async (method) => {
+		return makeApiRequest(`/y22/projects/${project.uuid}/membership`, {
+			method: method,
+		})
+			.then((res) => res.json())
+			.catch((err) => err);
+	}
+
+	const joinProject = async (event) => {
+		event.preventDefault();
+
+		setMembershipStatus(MembershipStatus.Joining);
+
+		const joinResult = await makeMembershipRequest("PUT")
+
+		if (joinResult.message === "OK") {
+			setMembershipStatus(MembershipStatus.Joined);
+		} else {
+			setMembershipStatus(MembershipStatus.NotJoined);
+		}
+	};
+
+	const leaveProject = async (event) => {
+		event.preventDefault();
+
+		setMembershipStatus(MembershipStatus.Leaving);
+
+		const leaveResult = await makeMembershipRequest("DELETE")
+
+		if (leaveResult.message === "OK") {
+			setMembershipStatus(MembershipStatus.NotJoined);
+		} else {
+			setMembershipStatus(MembershipStatus.Joined);
+		}
+	}
+
 	return (
 		<ProjectCard>
 			<h3>{project.name || "Unnamed Project"}</h3>
+			{typeof membershipStatus === "object" && (
+				<p>Membership Status: {`${membershipStatus.text}`}</p>
+			)}
 			{typeof project.members === "number" && (
 				<p>{project.members} members</p>
 			)}
-			{typeof project.joined === "boolean" && (
-				<SubmitButton
-					type="submit"
-					value={project.joined ? "Leave" : "Join"}
-					disabled
-				/>
+			{typeof membershipStatus !== MembershipStatus.Unknown && (
+				<form onSubmit={membershipStatus === MembershipStatus.Joined ? leaveProject : joinProject}>
+					<SubmitButton
+						type="submit"
+						value={
+							membershipStatus === MembershipStatus.Joined ? "Leave" :
+							membershipStatus === MembershipStatus.NotJoined ? "Join" :
+							"Error"
+						}
+					/>
+				</form>
 			)}
 		</ProjectCard>
 	);
