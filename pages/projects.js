@@ -33,10 +33,15 @@ class MembershipStatus {
 }
 
 const ProjectPreview = ({ project }) => {
-	let initialMembershipStatus = undefined;
-	if (typeof project.joined === "boolean") {
-		initialMembershipStatus = project.joined ? MembershipStatus.Joined : MembershipStatus.NotJoined;
+
+	const initialMembershipStatus = () => {
+		if (typeof project.joined === "boolean") {
+			return project.joined ? MembershipStatus.Joined : MembershipStatus.NotJoined;
+		} else {
+			return MembershipStatus.Unknown;
+		}
 	}
+
 	const [membershipStatus, setMembershipStatus] = useState(initialMembershipStatus);
 
 	const makeMembershipRequest = async (method) => {
@@ -84,7 +89,7 @@ const ProjectPreview = ({ project }) => {
 			{typeof project.members === "number" && (
 				<p>{project.members} members</p>
 			)}
-			{typeof membershipStatus === "object" && (
+			{typeof membershipStatus !== MembershipStatus.Unknown && (
 				<form onSubmit={membershipStatus === MembershipStatus.Joined ? leaveProject : joinProject}>
 					<SubmitButton
 						type="submit"
