@@ -40,7 +40,7 @@ export default () => (
 		<EventsContainer>
 			<Event icon={faMedal} name="Second" time="April 2021">
 				In Second, all players received the same set of three images on
-				which to vote in lightning rounds.  In each round, those who voted
+				which to vote in lightning rounds. In each round, those who voted
 				for the second-place image the fastest got the most points. Those
 				who voted for the first-place image received nothing. The fourth
 				iteration of the Sneknet automatically placed votes on images most
