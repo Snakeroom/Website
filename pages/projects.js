@@ -89,9 +89,9 @@ const ProjectPreview = ({ project }) => {
 					<SubmitButton
 						type="submit"
 						value={
-							membershipStatus === MembershipStatus.Joined ?
-							"Leave" : membershipStatus === MembershipStatus.NotJoined ?
-							"Join" : "Error"
+							membershipStatus === MembershipStatus.Joined ? "Leave" :
+							membershipStatus === MembershipStatus.NotJoined ? "Join" :
+							"Error"
 						}
 					/>
 				</form>
