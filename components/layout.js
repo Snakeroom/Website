@@ -131,7 +131,7 @@ const Footer = () => (
 		<FooterLogo />
 		<FooterContent>
 			<FooterCredit>
-				&copy; 2020{" "}
+				&copy; 2022{" "}
 				<Link href="https://github.com/Snakeroom/Website/blob/master/LICENSE">
 					snakeroom.org contributors
 				</Link>
