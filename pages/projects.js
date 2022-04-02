@@ -9,11 +9,14 @@ import ThumbnailImage from "../components/thumbnail-image";
 
 const ProjectsContainer = styled.div`
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 	gap: 10px;
 `;
 
 const ProjectCard = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	padding: 12px;
 	font-size: 1.1em;
 
@@ -21,15 +24,22 @@ const ProjectCard = styled.div`
 	border-radius: 8px;
 `;
 
-class MembershipStatus {
-	static Joining = new MembershipStatus("Joining...");
-	static Joined = new MembershipStatus("Joined");
-	static Leaving = new MembershipStatus("Leaving...");
-	static NotJoined = new MembershipStatus("Not Joined");
-	static Unknown = new MembershipStatus("Unknown");
+const ProjectDetails = styled.div`
+	width: 50%;
+	float: left;
+	margin-top: auto;
+`;
 
-	constructor(text) {
+class MembershipStatus {
+	static Joining = new MembershipStatus("Joining...", "🔃");
+	static Joined = new MembershipStatus("Joined", "✅");
+	static Leaving = new MembershipStatus("Leaving...", "🔃");
+	static NotJoined = new MembershipStatus("Not Joined", "❌");
+	static Unknown = new MembershipStatus("Unknown", "❔");
+
+	constructor(text, emoji) {
 		this.text = text;
+		this.emoji = emoji;
 	}
 }
 
@@ -93,24 +103,30 @@ const ProjectPreview = ({ project }) => {
 					onError={() => setRemoveImage(true)}
 				/>
 			)}
-			{typeof membershipStatus !== MembershipStatus.Unknown && (
-				<p>Membership Status: {`${membershipStatus.text}`}</p>
-			)}
-			{typeof project.members === "number" && (
-				<p>{project.members} members</p>
-			)}
-			{typeof membershipStatus !== MembershipStatus.Unknown && (
-				<form onSubmit={membershipStatus === MembershipStatus.Joined ? leaveProject : joinProject}>
-					<SubmitButton
-						type="submit"
-						value={
-							membershipStatus === MembershipStatus.Joined ? "Leave" :
-							membershipStatus === MembershipStatus.NotJoined ? "Join" :
-							"Error"
-						}
-					/>
-				</form>
-			)}
+			<div>
+				<ProjectDetails>
+					{typeof membershipStatus !== MembershipStatus.Unknown && (
+						<p>Joined: {`${membershipStatus.emoji}`}</p>
+					)}
+					{typeof project.members === "number" && (
+						<p>{project.members} members</p>
+					)}
+				</ProjectDetails>
+				{typeof membershipStatus !== MembershipStatus.Unknown && (
+					<form onSubmit={membershipStatus === MembershipStatus.Joined ? leaveProject : joinProject}>
+						<SubmitButton
+							type="submit"
+							value={
+								membershipStatus === MembershipStatus.Joined ? "➖ Leave" :
+								membershipStatus === MembershipStatus.Joining ? "➕ Joining..." :
+								membershipStatus === MembershipStatus.NotJoined ? "➕ Join" :
+								membershipStatus === MembershipStatus.Leaving ? "➖ Leaving..." :
+								"Error"
+							}
+						/>
+					</form>
+				)}
+			</div>
 		</ProjectCard>
 	);
 };
