@@ -3,8 +3,9 @@ import Router from "next/router";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { PageTitle } from "../lib/common-style";
-import { makeApiRequest } from "../lib/api";
+import { makeApiRequest, API_BASE } from "../lib/api";
 import SubmitButton from "../components/submit-button";
+import ThumbnailImage from "../components/thumbnail-image";
 
 const ProjectsContainer = styled.div`
 	display: grid;
@@ -33,6 +34,7 @@ class MembershipStatus {
 }
 
 const ProjectPreview = ({ project }) => {
+
 
 	const initialMembershipStatus = () => {
 		if (typeof project.joined === "boolean") {
@@ -80,10 +82,18 @@ const ProjectPreview = ({ project }) => {
 		}
 	}
 
+	const [removeImage, setRemoveImage] = useState(false);
+
 	return (
 		<ProjectCard>
 			<h3>{project.name || "Unnamed Project"}</h3>
-			{typeof membershipStatus === "object" && (
+			{!removeImage && (
+				<ThumbnailImage
+					src={`${API_BASE}/y22/projects/${project.uuid}/bitmap`}
+					onError={() => setRemoveImage(true)}
+				/>
+			)}
+			{typeof membershipStatus !== MembershipStatus.Unknown && (
 				<p>Membership Status: {`${membershipStatus.text}`}</p>
 			)}
 			{typeof project.members === "number" && (
