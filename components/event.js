@@ -15,17 +15,19 @@ const EventContainer = styled.div`
 	}
 `;
 
-const Event = ({ icon, name, time, children }) => (
-	<EventContainer>
-		<h3>
-			<FontAwesomeIcon icon={icon} />
-			{icon && (name || time) ? "\xA0" : ""}
-			<span>
-				{name}
-				{name && time ? ` - ${time}` : ""}
-			</span>
-		</h3>
-		<p>{children}</p>
-	</EventContainer>
-);
+function Event({ icon, name, time, children }) {
+	return (
+		<EventContainer>
+			<h3>
+				<FontAwesomeIcon icon={icon} />
+				{icon && (name || time) ? "\xA0" : ""}
+				<span>
+					{name}
+					{name && time ? ` - ${time}` : ""}
+				</span>
+			</h3>
+			<p>{children}</p>
+		</EventContainer>
+	);
+}
 export default Event;

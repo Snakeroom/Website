@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const StyledInput = styled.input`
+export const StyledInput = styled.input`
 	border: 1px solid ${(props) => props.theme.colors.primary};
 	border-radius: 2px;
 	margin: 10px 0;

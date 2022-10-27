@@ -5,7 +5,7 @@ import { useContext } from "react";
 import { ThemeContext } from "../lib/theme";
 import HeaderButton from "./header-button";
 
-const ThemeSwitcher = () => {
+function ThemeSwitcher() {
 	const [theme, setTheme] = useContext(ThemeContext);
 	const toggleTheme = () => {
 		if (theme.name === "light") setTheme("dark");
@@ -19,6 +19,6 @@ const ThemeSwitcher = () => {
 			/>
 		</HeaderButton>
 	);
-};
+}
 
 export default ThemeSwitcher;

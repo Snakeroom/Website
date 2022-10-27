@@ -33,11 +33,13 @@ const StyledAnchor = styled.a`
 	}
 `;
 
-const DiscordNag = () => (
-	<StyledAnchor href="https://discord.gg/CNahEjU">
-		<FontAwesomeIcon icon={faDiscord} />
-		Join our Discord!
-	</StyledAnchor>
-);
+function DiscordNag() {
+	return (
+		<StyledAnchor href="https://discord.gg/CNahEjU">
+			<FontAwesomeIcon icon={faDiscord} />
+			Join our Discord!
+		</StyledAnchor>
+	);
+}
 
 export default DiscordNag;
