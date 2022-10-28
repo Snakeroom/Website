@@ -8,18 +8,23 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import Layout from "../components/layout";
 import GlobalStyle from "../lib/global-style";
 import { ThemeContext } from "../lib/theme";
-import { authReducer } from "../lib/ducks/auth";
+import authReducer from "../lib/ducks/auth";
 import useTheme from "../lib/hooks/useTheme";
-import { StateContext } from "../lib/state";
+import StateContext from "../lib/state";
 import { makeApiRequest } from "../lib/api";
 
 config.autoAddCss = false;
 
-const App = ({ Component, pageProps }) => {
-	const [theme, setTheme] = useTheme();
-	const [userState, dispatch] = useReducer(authReducer, {
-		outdated: true,
-	});
+function App({ Component, pageProps }) {
+	const themeHook = useTheme();
+	const [theme] = themeHook;
+
+	const [userState, dispatch] = useReducer(
+		{
+			outdated: true,
+		},
+		authReducer
+	);
 
 	const props = {
 		...pageProps,
@@ -63,13 +68,9 @@ const App = ({ Component, pageProps }) => {
 					href="/icons/apple-touch-icon.png"
 				/>
 				<link rel="manifest" href="/manifest.json" />
-				<link
-					rel="stylesheet"
-					href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
-				/>
 			</Head>
 			<GlobalStyle />
-			<ThemeContext.Provider value={[theme, setTheme]}>
+			<ThemeContext.Provider value={themeHook}>
 				<StateContext.Provider value={userState}>
 					<Layout>
 						<Component {...props} />
@@ -78,6 +79,6 @@ const App = ({ Component, pageProps }) => {
 			</ThemeContext.Provider>
 		</ThemeProvider>
 	);
-};
+}
 
 export default App;

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import styled from "styled-components";
 import { makeApiRequest } from "../lib/api";
-import { StateContext } from "../lib/state";
+import StateContext from "../lib/state";
 import { Box, PageTitle } from "../lib/common-style";
 
 const Content = styled.div`
@@ -22,17 +22,19 @@ const TokenField = styled.td`
 	padding: 0 10px;
 `;
 
-const Token = ({ token }) => (
-	<Row active={token.active}>
-		<TokenField>{token.name}</TokenField>
-		<TokenField>
-			<code>{token.truncated_value}...</code>
-		</TokenField>
-		<TokenField>{token.whitelisted_address}</TokenField>
-	</Row>
-);
+function Token({ token }) {
+	return (
+		<Row active={token.active}>
+			<TokenField>{token.name}</TokenField>
+			<TokenField>
+				<code>{token.truncated_value}...</code>
+			</TokenField>
+			<TokenField>{token.whitelisted_address}</TokenField>
+		</Row>
+	);
+}
 
-export default () => {
+export default function SneknetPage() {
 	const [tokens, setTokens] = useState([]);
 
 	useEffect(() => {
@@ -87,4 +89,4 @@ export default () => {
 			</Content>
 		</>
 	);
-};
+}

@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Router from "next/router";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { PageTitle } from "../lib/common-style";
@@ -22,42 +21,49 @@ const ProjectCard = styled.div`
 
 class MembershipStatus {
 	static Joining = new MembershipStatus("Joining...");
-	static Joined = new MembershipStatus("Joined");
+
+	static Joined = new MembershipStatus("Joined", "Leave");
+
 	static Leaving = new MembershipStatus("Leaving...");
-	static NotJoined = new MembershipStatus("Not Joined");
+
+	static NotJoined = new MembershipStatus("Not Joined", "Join");
+
 	static Unknown = new MembershipStatus("Unknown");
 
-	constructor(text) {
+	constructor(text, button) {
 		this.text = text;
+		this.button = button ?? "Error";
 	}
 }
 
-const ProjectPreview = ({ project }) => {
-
+function ProjectPreview({ project }) {
 	const initialMembershipStatus = () => {
 		if (typeof project.joined === "boolean") {
-			return project.joined ? MembershipStatus.Joined : MembershipStatus.NotJoined;
-		} else {
-			return MembershipStatus.Unknown;
+			return project.joined
+				? MembershipStatus.Joined
+				: MembershipStatus.NotJoined;
 		}
-	}
+		return MembershipStatus.Unknown;
+	};
 
-	const [membershipStatus, setMembershipStatus] = useState(initialMembershipStatus);
+	const [membershipStatus, setMembershipStatus] = useState(
+		initialMembershipStatus
+	);
 
 	const makeMembershipRequest = async (method) => {
 		return makeApiRequest(`/y22/projects/${project.uuid}/membership`, {
-			method: method,
+			method,
 		})
 			.then((res) => res.json())
 			.catch((err) => err);
-	}
+	};
 
 	const joinProject = async (event) => {
 		event.preventDefault();
 
 		setMembershipStatus(MembershipStatus.Joining);
 
-		const joinResult = await makeMembershipRequest("PUT")
+		const joinResult = await makeMembershipRequest("PUT");
 
 		if (joinResult.message === "OK") {
 			setMembershipStatus(MembershipStatus.Joined);
@@ -71,14 +77,14 @@ const ProjectPreview = ({ project }) => {
 
 		setMembershipStatus(MembershipStatus.Leaving);
 
-		const leaveResult = await makeMembershipRequest("DELETE")
+		const leaveResult = await makeMembershipRequest("DELETE");
 
 		if (leaveResult.message === "OK") {
 			setMembershipStatus(MembershipStatus.NotJoined);
 		} else {
 			setMembershipStatus(MembershipStatus.Joined);
 		}
-	}
+	};
 
 	return (
 		<ProjectCard>
@@ -89,23 +95,25 @@ const ProjectPreview = ({ project }) => {
 			{typeof project.members === "number" && (
 				<p>{project.members} members</p>
 			)}
-			{typeof membershipStatus !== MembershipStatus.Unknown && (
-				<form onSubmit={membershipStatus === MembershipStatus.Joined ? leaveProject : joinProject}>
+			{membershipStatus !== MembershipStatus.Unknown && (
+				<form
+					onSubmit={
+						membershipStatus === MembershipStatus.Joined
+							? leaveProject
+							: joinProject
+					}
+				>
 					<SubmitButton
 						type="submit"
-						value={
-							membershipStatus === MembershipStatus.Joined ? "Leave" :
-							membershipStatus === MembershipStatus.NotJoined ? "Join" :
-							"Error"
-						}
+						value={membershipStatus.button}
 					/>
 				</form>
 			)}
 		</ProjectCard>
 	);
-};
+}
 
-export default () => {
+export default function ProjectsPage() {
 	const [projects, setProjects] = useState(null);
 
 	useEffect(() => {
@@ -148,4 +156,4 @@ export default () => {
 			)}
 		</>
 	);
-};
+}

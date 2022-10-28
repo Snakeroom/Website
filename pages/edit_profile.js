@@ -2,10 +2,10 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { API_BASE } from "../lib/api";
 import { Box, PageTitle } from "../lib/common-style";
-import { StateContext } from "../lib/state";
-import SubmitButton from "../components/submit-button";
+import StateContext from "../lib/state";
+import SubmitButton, { StyledInput } from "../components/submit-button";
 
-export default ({ dispatch }) => {
+export default function EditProfilePage({ dispatch }) {
 	const router = useRouter();
 
 	function submitForm(e) {
@@ -15,7 +15,7 @@ export default ({ dispatch }) => {
 		const { elements } = form;
 		const payload = new URLSearchParams();
 
-		for (let i = 0; i < elements.length; i++) {
+		for (let i = 0; i < elements.length; i += 1) {
 			const element = elements[i];
 			const { name } = element;
 
@@ -67,8 +67,9 @@ export default ({ dispatch }) => {
 						<Box>
 							<PageTitle>Not signed in!</PageTitle>
 						</Box>
-					)}
+					)
+				}
 			</StateContext.Consumer>
 		</>
 	);
-};
+}
