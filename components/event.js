@@ -1,13 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
+import { Card } from "../lib/common-style";
 
-const EventContainer = styled.div`
-	padding: 12px;
-	font-size: 1.1em;
-
-	background: ${(props) => props.theme.colors.backgroundMuted};
-	border-radius: 8px;
-
+const EventContainer = styled(Card)`
 	& > h3 {
 		text-align: center;
 		margin-bottom: 0.4em;

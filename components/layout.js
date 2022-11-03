@@ -86,6 +86,9 @@ function Header() {
 						<HeaderNavLink href="/projects">Projects</HeaderNavLink>
 					</li>
 					<li>
+						<HeaderNavLink href="/snakedex">Snakedex</HeaderNavLink>
+					</li>
+					<li>
 						<HeaderNavLink href="/sneknet">Sneknet</HeaderNavLink>
 					</li>
 					<li>
