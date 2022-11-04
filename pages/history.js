@@ -42,14 +42,14 @@ export default function HistoryPage() {
 			<EventsContainer>
 				<Event icon={faPalette} name="Place" time="April 2022">
 					For the second iteration of Place, players were invited to
-					place a pixel on a blank canvas once every 5 minutes. Each
-					day of the event another 1000x1000 pixel portion of the
-					canvas was made available. Sneknet was developed in two
-					parts: a website for uploading and joining project groups
-					and an extension to display these groups as an overlay.
-					Snakeroom used this infrastructure to draw a logo on the
-					canvas and then partnered with several nearby groups to
-					integrate their designs into the main project.
+					place a pixel on a blank canvas once every 5 minutes. The
+					canvas began as a 1000x1000 pixel area and was expanded
+					twice up to 2000x2000. Sneknet was developed in two parts, a
+					website for uploading and joining project groups, and an
+					extension to display these groups as an overlay. Snakeroom
+					used this infrastructure to draw a logo on the canvas and
+					then partnered with several nearby groups to integrate their
+					designs into the main project.
 				</Event>
 				<Event icon={faMedal} name="Second" time="April 2021">
 					In Second, all players received the same set of three images
