@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { PageTitle } from "../lib/common-style";
+import { PageTitle, Card } from "../lib/common-style";
 import { makeApiRequest } from "../lib/api";
 import SubmitButton from "../components/submit-button";
 
@@ -9,14 +9,6 @@ const ProjectsContainer = styled.div`
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 10px;
-`;
-
-const ProjectCard = styled.div`
-	padding: 12px;
-	font-size: 1.1em;
-
-	background: ${(props) => props.theme.colors.backgroundMuted};
-	border-radius: 8px;
 `;
 
 class MembershipStatus {
@@ -87,7 +79,7 @@ function ProjectPreview({ project }) {
 	};
 
 	return (
-		<ProjectCard>
+		<Card>
 			<h3>{project.name || "Unnamed Project"}</h3>
 			{typeof membershipStatus === "object" && (
 				<p>Membership Status: {`${membershipStatus.text}`}</p>
@@ -109,7 +101,7 @@ function ProjectPreview({ project }) {
 					/>
 				</form>
 			)}
-		</ProjectCard>
+		</Card>
 	);
 }
 
