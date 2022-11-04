@@ -45,7 +45,7 @@ export default function HistoryPage() {
 					place a pixel on a blank canvas once every 5 minutes. Each
 					day of the event another 1000x1000 pixel portion of the
 					canvas was made available. Sneknet was developed in two
-					parts, a website for uploading and joining project groups,
+					parts: a website for uploading and joining project groups
 					and an extension to display these groups as an overlay.
 					Snakeroom used this infrastructure to draw a logo on the
 					canvas and then partnered with several nearby groups to
