@@ -61,7 +61,10 @@ function getSnakeImage(snake) {
 }
 
 const SnakeImageContainer = styled.div`
-	background: radial-gradient(#ffffff22, transparent);
+	background: radial-gradient(
+		${(props) => props.theme.colors.cardImageBackgroundGradient},
+		transparent
+	);
 
 	@media not all and (max-width: 600px) {
 		padding: 12px;
