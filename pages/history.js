@@ -5,6 +5,7 @@ import {
 	faMedal,
 	faRandom,
 	faVideo,
+	faPalette,
 } from "@fortawesome/free-solid-svg-icons";
 import Head from "next/head";
 import styled from "styled-components";
@@ -39,12 +40,23 @@ export default function HistoryPage() {
 				<title>History - The Snakeroom</title>
 			</Head>
 			<EventsContainer>
+				<Event icon={faPalette} name="Place" time="April 2022">
+					For the second iteration of Place, players were invited to
+					place a pixel on a blank canvas once every 5 minutes. The
+					canvas began as a 1000x1000 pixel area and was expanded
+					twice up to 2000x2000. Sneknet was developed in two parts, a
+					website for uploading and joining project groups, and an
+					extension to display these groups as an overlay. Snakeroom
+					used this infrastructure to draw a logo on the canvas and
+					then partnered with several nearby groups to integrate their
+					designs into the main project.
+				</Event>
 				<Event icon={faMedal} name="Second" time="April 2021">
 					In Second, all players received the same set of three images
 					on which to vote in lightning rounds. In each round, those
-					who voted for the second-place image the fastest got the
+					who voted for the second-place image the earliest got the
 					most points. Those who voted for the first-place image
-					received nothing. The fourth iteration of the Sneknet
+					received no points. The fourth iteration of the Sneknet
 					automatically placed votes on images most likely to be voted
 					second place, allowing our users to climb up the
 					leaderboard.
