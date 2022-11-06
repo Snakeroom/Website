@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { makeSnakedexRequest, SNAKEDEX_BASE } from "../lib/api";
 import { Box, Card } from "../lib/common-style";
+import { StyledInput } from "../components/submit-button";
 
 function getSnakedexDescription(data) {
 	if (data === null) {
@@ -60,6 +61,33 @@ function getSnakeImage(snake) {
 	return null;
 }
 
+function isMatchingString(string, filter) {
+	if (typeof string !== "string") return false;
+	return string.toLowerCase().includes(filter);
+}
+
+function filterSnakes(snakes, originalFilter) {
+	const filter = originalFilter.trim().toLowerCase();
+	if (filter === "") return snakes;
+
+	return snakes.filter((snake) => {
+		if (
+			isMatchingString(snake.name, filter) ||
+			isMatchingString(snake.description, filter)
+		) {
+			return true;
+		}
+
+		if (Array.isArray(snake.names)) {
+			if (snake.names.some((name) => isMatchingString(name, filter))) {
+				return true;
+			}
+		}
+
+		return false;
+	});
+}
+
 const SnakeImageContainer = styled.div`
 	background: radial-gradient(
 		${(props) => props.theme.colors.cardImageBackgroundGradient},
@@ -105,7 +133,6 @@ const SnakesContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 
-	margin-top: 20px;
 	gap: 12px;
 `;
 
@@ -135,10 +162,10 @@ function SnakedexSnake({ snake }) {
 	);
 }
 
-function SnakedexSnakes({ snakes }) {
+function SnakedexSnakes({ snakes, filter }) {
 	return (
 		<SnakesContainer>
-			{snakes.map((snake) => {
+			{filterSnakes(snakes, filter).map((snake) => {
 				return <SnakedexSnake snake={snake} key={snake.id} />;
 			})}
 		</SnakesContainer>
@@ -147,6 +174,7 @@ function SnakedexSnakes({ snakes }) {
 
 export default function SnakedexPage() {
 	const [data, setData] = useState(null);
+	const [filter, setFilter] = useState("");
 
 	useEffect(() => {
 		makeSnakedexRequest(`/listing/all.json`)
@@ -167,7 +195,15 @@ export default function SnakedexPage() {
 				<h1>Snakedex</h1>
 				<p>{getSnakedexDescription(data)}</p>
 			</Box>
-			{data !== null && <SnakedexSnakes snakes={data.snakes} />}
+			<br />
+			<StyledInput
+				type="text"
+				placeholder="Filter..."
+				onChange={(event) => setFilter(event.target.value)}
+			/>
+			{data !== null && (
+				<SnakedexSnakes snakes={data.snakes} filter={filter} />
+			)}
 		</>
 	);
 }
