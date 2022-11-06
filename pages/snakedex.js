@@ -1,6 +1,7 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { makeSnakedexRequest, SNAKEDEX_BASE } from "../lib/api";
 import { Box, Card } from "../lib/common-style";
 import { StyledInput } from "../components/submit-button";
@@ -173,8 +174,16 @@ function SnakedexSnakes({ snakes, filter }) {
 }
 
 export default function SnakedexPage() {
+	const router = useRouter();
+
 	const [data, setData] = useState(null);
 	const [filter, setFilter] = useState("");
+
+	useEffect(() => {
+		if (router.query.q !== undefined) {
+			setFilter(router.query.q);
+		}
+	}, [router.query.q]);
 
 	useEffect(() => {
 		makeSnakedexRequest(`/listing/all.json`)
@@ -199,6 +208,7 @@ export default function SnakedexPage() {
 			<StyledInput
 				type="text"
 				placeholder="Filter..."
+				value={filter}
 				onChange={(event) => setFilter(event.target.value)}
 			/>
 			{data !== null && (
