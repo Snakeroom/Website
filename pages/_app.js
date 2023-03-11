@@ -8,7 +8,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import Layout from "../components/layout";
 import GlobalStyle from "../lib/global-style";
 import { ThemeContext } from "../lib/theme";
-import authReducer from "../lib/ducks/auth";
+import { authReducer, initialAuthState } from "../lib/ducks/auth";
 import useTheme from "../lib/hooks/useTheme";
 import StateContext from "../lib/state";
 import { makeApiRequest } from "../lib/api";
@@ -19,12 +19,7 @@ function App({ Component, pageProps }) {
 	const themeHook = useTheme();
 	const [theme] = themeHook;
 
-	const [userState, dispatch] = useReducer(
-		{
-			outdated: true,
-		},
-		authReducer
-	);
+	const [userState, dispatch] = useReducer(authReducer, initialAuthState);
 
 	const props = {
 		...pageProps,
