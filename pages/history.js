@@ -3,33 +3,30 @@ import {
 	faCircleNotch,
 	faMask,
 	faMedal,
-	faRandom,
-	faVideo,
 	faPalette,
+	faRandom,
+	faVideo
 } from "@fortawesome/free-solid-svg-icons";
 import Head from "next/head";
 import styled from "styled-components";
 import Event from "../components/event";
+import { Box, PageTitle } from "../lib/common-style";
 
 const EventsContainer = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
+	display: block;
+	position: relative;
+	text-align: right;
+	margin-top: 20px;
 
-	& > * {
-		flex: 0 1 calc(50% - 16px);
-		margin: 8px;
-
-		max-width: 35%;
-	}
-
-	@media (max-width: 800px) {
-		flex-direction: column;
-
-		& > * {
-			flex-basis: 100%;
-			max-width: unset;
-		}
+	&::after {
+		content: "";
+		position: absolute;
+		width: 6px;
+		background-color: ${(props) => props.theme.colors.primary};
+		top: 30px;
+		bottom: 130px;
+		right: 30px;
+		margin-left: -3px;
 	}
 `;
 
@@ -39,6 +36,8 @@ export default function HistoryPage() {
 			<Head>
 				<title>History - The Snakeroom</title>
 			</Head>
+			<PageTitle>History</PageTitle>
+			<Box>Discover the ancient history of the Snakeroom...</Box>
 			<EventsContainer>
 				<Event icon={faPalette} name="Place" time="April 2022">
 					For the second iteration of Place, players were invited to
