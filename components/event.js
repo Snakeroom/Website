@@ -67,7 +67,7 @@ function Event({ icon, name, time, children }) {
 				<EventTitle>
 					<FontAwesomeIcon
 						icon={icon}
-						style={{ "margin-right": "5px" }}
+						style={{ marginRight: "5px" }}
 					/>
 					{icon && (name || time) ? "\xA0" : ""}
 					<span>

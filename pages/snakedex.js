@@ -114,7 +114,7 @@ const SnakeTextContainer = styled.div`
 	}
 `;
 
-const SnakeImage = styled.img`
+export const SnakeImage = styled.img`
 	display: block;
 	width: 96px;
 	min-height: 96px;
