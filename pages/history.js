@@ -5,7 +5,7 @@ import {
 	faMedal,
 	faPalette,
 	faRandom,
-	faVideo
+	faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import Head from "next/head";
 import styled from "styled-components";
