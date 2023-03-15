@@ -3,6 +3,7 @@ import styled from "styled-components";
 import StateContext from "../lib/state";
 import Link from "../components/link";
 import { PageTitle } from "../lib/common-style";
+import { API_BASE } from "../lib/api";
 
 const Container = styled.div`
 	font-size: 1.5rem;
@@ -30,7 +31,7 @@ export default function AccountPage() {
 								<Link href="/edit_profile">Edit Profile</Link>
 								<br />
 								{userState.user.is_staff && (
-									<Link href="https://api.snakeroom.org/admin">
+									<Link href={`${API_BASE}/admin`}>
 										Admin Console
 									</Link>
 								)}
