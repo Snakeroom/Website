@@ -1,15 +1,8 @@
-import Head from "next/head";
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { PageTitle, Card } from "../lib/common-style";
+import { useState } from "react";
+import { Card } from "../lib/common-style";
 import { makeApiRequest } from "../lib/api";
-import SubmitButton from "../components/submit-button";
-
-const ProjectsContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 10px;
-`;
+import Link from "./link";
+import SubmitButton from "./submit-button";
 
 class MembershipStatus {
 	static Joining = new MembershipStatus("Joining...");
@@ -28,7 +21,21 @@ class MembershipStatus {
 	}
 }
 
-function ProjectPreview({ project }) {
+function ProjectName({ project, summary }) {
+	const name = project.name || "Unnamed Project";
+
+	if (summary) {
+		return (
+			<h3>
+				<Link href={`/projects/${project.uuid}`}>{name}</Link>
+			</h3>
+		);
+	}
+
+	return <h3>{name}</h3>;
+}
+
+function ProjectPreview({ project, summary }) {
 	const initialMembershipStatus = () => {
 		if (typeof project.joined === "boolean") {
 			return project.joined
@@ -80,7 +87,7 @@ function ProjectPreview({ project }) {
 
 	return (
 		<Card>
-			<h3>{project.name || "Unnamed Project"}</h3>
+			<ProjectName project={project} summary={summary} />
 			{typeof membershipStatus === "object" && (
 				<p>Membership Status: {`${membershipStatus.text}`}</p>
 			)}
@@ -105,47 +112,4 @@ function ProjectPreview({ project }) {
 	);
 }
 
-export default function ProjectsPage() {
-	const [projects, setProjects] = useState(null);
-
-	useEffect(() => {
-		makeApiRequest("/y22/projects")
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.projects) {
-					setProjects(data.projects);
-				}
-			});
-	}, []);
-
-	return (
-		<>
-			<Head>
-				<title>Projects - The Snakeroom</title>
-			</Head>
-			<PageTitle>Projects</PageTitle>
-			<br />
-			{projects === null ? (
-				<p>Loading projects</p>
-			) : (
-				<>
-					<p>
-						{projects.length === 1
-							? "There is 1 project available."
-							: `There are ${projects.length} projects available.`}
-					</p>
-					<ProjectsContainer>
-						{projects.map((project) => {
-							return (
-								<ProjectPreview
-									key={project.uuid}
-									project={project}
-								/>
-							);
-						})}
-					</ProjectsContainer>
-				</>
-			)}
-		</>
-	);
-}
+export default ProjectPreview;
