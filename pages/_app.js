@@ -1,17 +1,47 @@
 import Head from "next/head";
 
+import { useEffect, useReducer } from "react";
 import { ThemeProvider } from "styled-components";
-import useTheme from "../lib/hooks/useTheme";
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
 import Layout from "../components/layout";
 import GlobalStyle from "../lib/global-style";
 import { ThemeContext } from "../lib/theme";
+import { authReducer, initialAuthState } from "../lib/ducks/auth";
+import useTheme from "../lib/hooks/useTheme";
+import StateContext from "../lib/state";
+import { makeApiRequest } from "../lib/api";
 
-import { config } from "@fortawesome/fontawesome-svg-core";
-import "@fortawesome/fontawesome-svg-core/styles.css";
 config.autoAddCss = false;
 
-const App = ({ Component, pageProps }) => {
-	const [theme, setTheme] = useTheme();
+function App({ Component, pageProps }) {
+	const themeHook = useTheme();
+	const [theme] = themeHook;
+
+	const [userState, dispatch] = useReducer(authReducer, initialAuthState);
+
+	const props = {
+		...pageProps,
+		dispatch,
+	};
+
+	useEffect(() => {
+		if (!userState.outdated) return;
+
+		makeApiRequest("/identity/@me")
+			.then((res) => res.json().then((data) => ({ data, ok: res.ok })))
+			.then(({ data, ok }) => {
+				if (ok) {
+					dispatch({ type: "restore", user: data });
+				} else {
+					throw new Error(data.error);
+				}
+			})
+			.catch(() => {
+				// Ignore for now. Flash warning in future?
+			});
+	}, [userState.outdated]);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -33,19 +63,17 @@ const App = ({ Component, pageProps }) => {
 					href="/icons/apple-touch-icon.png"
 				/>
 				<link rel="manifest" href="/manifest.json" />
-				<link
-					rel="stylesheet"
-					href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
-				/>
 			</Head>
 			<GlobalStyle />
-			<ThemeContext.Provider value={[theme, setTheme]}>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
+			<ThemeContext.Provider value={themeHook}>
+				<StateContext.Provider value={userState}>
+					<Layout>
+						<Component {...props} />
+					</Layout>
+				</StateContext.Provider>
 			</ThemeContext.Provider>
 		</ThemeProvider>
 	);
-};
+}
 
 export default App;

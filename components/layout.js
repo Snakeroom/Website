@@ -65,40 +65,45 @@ const ButtonGroup = styled.div`
 	}
 `;
 
-const HeaderNavLink = ({ children, ...props }) => {
+function HeaderNavLink({ children, ...props }) {
 	const router = useRouter();
 	return (
 		<Link active={router.pathname === props.href} {...props}>
 			{children}
 		</Link>
 	);
-};
+}
 
-const Header = () => (
-	<HeaderContainer>
-		<HeaderLink href="/">
-			<HeaderLogo />
-			<HeaderTitle>Snakeroom</HeaderTitle>
-		</HeaderLink>
-		<HeaderNav>
-			<ul>
-				<li>
-					<HeaderNavLink href="/">Home</HeaderNavLink>
-				</li>
-				<li>
-					<HeaderNavLink href="/history">History</HeaderNavLink>
-				</li>
-				<li>
-					<HeaderNavLink href="/sneknet">Sneknet</HeaderNavLink>
-				</li>
-			</ul>
-		</HeaderNav>
-		<ButtonGroup>
-			<ThemeSwitcher />
-			<AccountDropdown />
-		</ButtonGroup>
-	</HeaderContainer>
-);
+function Header() {
+	return (
+		<HeaderContainer>
+			<HeaderLink href="/">
+				<HeaderLogo />
+				<HeaderTitle>Snakeroom</HeaderTitle>
+			</HeaderLink>
+			<HeaderNav>
+				<ul>
+					<li>
+						<HeaderNavLink href="/">Home</HeaderNavLink>
+					</li>
+					<li>
+						<HeaderNavLink href="/history">History</HeaderNavLink>
+					</li>
+					<li>
+						<HeaderNavLink href="/snakedex">Snakedex</HeaderNavLink>
+					</li>
+					<li>
+						<HeaderNavLink href="/sneknet">Sneknet</HeaderNavLink>
+					</li>
+				</ul>
+			</HeaderNav>
+			<ButtonGroup>
+				<ThemeSwitcher />
+				<AccountDropdown />
+			</ButtonGroup>
+		</HeaderContainer>
+	);
+}
 
 const FooterLogo = styled(Logo)`
 	filter: grayscale();
@@ -130,24 +135,43 @@ const FooterCredit = styled.p`
 
 const FooterLinks = styled.p``;
 
-const Footer = () => (
-	<FooterContainer>
-		<FooterLogo />
-		<FooterContent>
-			<FooterCredit>
-				&copy; 2020{" "}
-				<Link href="https://github.com/Snakeroom/Website/blob/master/LICENSE">
-					snakeroom.org contributors
-				</Link>
-			</FooterCredit>
-			<FooterLinks>
-				<Link href="https://discord.gg/CNahEjU">Discord</Link> —{" "}
-				<Link href="https://github.com/Snakeroom">GitHub</Link> —{" "}
-				<Link href="https://reddit.com/r/snakeroomalliance">Reddit</Link>
-			</FooterLinks>
-		</FooterContent>
-	</FooterContainer>
-);
+function Footer() {
+	return (
+		<FooterContainer>
+			<FooterLogo />
+			<FooterContent>
+				<FooterCredit>
+					&copy; 2022{" "}
+					<Link href="https://github.com/Snakeroom/Website/blob/master/LICENSE">
+						snakeroom.org contributors
+					</Link>
+				</FooterCredit>
+				<FooterLinks>
+					<Link
+						href="https://discord.gg/CNahEjU"
+						title="discord.gg/CNahEjU"
+					>
+						Discord
+					</Link>{" "}
+					—{" "}
+					<Link
+						href="https://github.com/Snakeroom"
+						title="@Snakeroom"
+					>
+						GitHub
+					</Link>{" "}
+					—{" "}
+					<Link
+						href="https://reddit.com/r/snakeroomalliance"
+						title="r/snakeroomalliance"
+					>
+						Reddit
+					</Link>
+				</FooterLinks>
+			</FooterContent>
+		</FooterContainer>
+	);
+}
 
 const LayoutContainer = styled.div`
 	display: flex;
@@ -163,15 +187,17 @@ const PageContainer = styled.main`
 	position: relative;
 `;
 
-const Layout = ({ children }) => (
-	<LayoutContainer>
-		<Header />
-		<PageContainer>
-			{children}
-			<DiscordNag />
-		</PageContainer>
-		<Footer />
-	</LayoutContainer>
-);
+function Layout({ children }) {
+	return (
+		<LayoutContainer>
+			<Header />
+			<PageContainer>
+				{children}
+				<DiscordNag />
+			</PageContainer>
+			<Footer />
+		</LayoutContainer>
+	);
+}
 
 export default Layout;
