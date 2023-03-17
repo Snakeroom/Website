@@ -24,15 +24,17 @@ const Title = styled.h1`
 	font-weight: normal;
 `;
 
-export default () => (
-	<>
-		<Head>
-			<title>Not Found - The Snakeroom</title>
-		</Head>
-		<Container>
-			<Title>
-				Page not found. <StyledLogo />
-			</Title>
-		</Container>
-	</>
-);
+export default function NotFoundPage() {
+	return (
+		<>
+			<Head>
+				<title>Not Found - The Snakeroom</title>
+			</Head>
+			<Container>
+				<Title>
+					Page not found. <StyledLogo />
+				</Title>
+			</Container>
+		</>
+	);
+}

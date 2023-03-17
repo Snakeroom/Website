@@ -1,7 +1,7 @@
 import NextLink from "next/link";
 import styled from "styled-components";
 
-const StyledAnchor = styled.a`
+const StyledAnchor = styled(NextLink)`
 	color: ${(props) => props.theme.colors.accent};
 	display: inline-flex;
 	text-decoration: none;
@@ -10,21 +10,20 @@ const StyledAnchor = styled.a`
 	&:active {
 		text-decoration: underline;
 	}
-
-	${(props) => props.active && "font-weight: bold;"}
 `;
 
-const Link = ({ active, children, className, href, ...props }) =>
-	href[0] === "/" ? (
-		<NextLink {...props} href={href} passHref>
-			<StyledAnchor active={active} className={className}>
-				{children}
-			</StyledAnchor>
-		</NextLink>
-	) : (
-		<StyledAnchor active={active} className={className} href={href}>
+const ActiveStyledAnchor = styled(StyledAnchor)`
+	font-weight: bold;
+`;
+
+function Link({ active, children, className, href, title, ...props }) {
+	const Anchor = active ? ActiveStyledAnchor : StyledAnchor;
+
+	return (
+		<Anchor {...props} href={href} passHref className={className}>
 			{children}
-		</StyledAnchor>
+		</Anchor>
 	);
+}
 
 export default Link;

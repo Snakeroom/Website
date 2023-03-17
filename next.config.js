@@ -3,8 +3,8 @@ const withOffline = require("next-offline");
 
 module.exports = withImages(
 	withOffline({
-		devIndicators: {
-			autoPrerender: false,
+		compiler: {
+			styledComponents: true,
 		},
 	})
 );

@@ -18,5 +18,5 @@
 	"scope": "/",
 	"start_url": "/?manifest=true",
 	"background_color": "#292c33",
-	"theme_color": "#292c33"
+	"theme_color": "#3a4048"
 }
