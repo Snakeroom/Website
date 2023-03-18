@@ -1,8 +1,9 @@
 import Head from "next/head";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { Box, PageTitle, Card } from "../lib/common-style";
-import { makeApiRequest } from "../lib/api";
+import { Box, PageTitle } from "../lib/common-style";
+import { API_BASE, makeApiRequest } from "../lib/api";
+import Card from "../components/card";
 import SubmitButton, { StyledInput } from "../components/submit-button";
 import useFilter from "../lib/hooks/useFilter";
 import { isMatchingString, filterArray } from "../lib/filter";
@@ -81,7 +82,13 @@ function ProjectPreview({ project }) {
 	};
 
 	return (
-		<Card>
+		<Card
+			src={
+				"x" in project && "y" in project
+					? `${API_BASE}/y22/projects/${project.uuid}/bitmap`
+					: null
+			}
+		>
 			<h3>{project.name || "Unnamed Project"}</h3>
 			{typeof membershipStatus === "object" && (
 				<p>Membership Status: {`${membershipStatus.text}`}</p>

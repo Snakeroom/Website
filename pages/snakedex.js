@@ -2,7 +2,8 @@ import Head from "next/head";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { makeSnakedexRequest, SNAKEDEX_BASE } from "../lib/api";
-import { Box, Card } from "../lib/common-style";
+import { Box } from "../lib/common-style";
+import Card from "../components/card";
 import { StyledInput } from "../components/submit-button";
 import useFilter from "../lib/hooks/useFilter";
 import { isMatchingString, filterArray } from "../lib/filter";
@@ -63,47 +64,6 @@ function getSnakeImage(snake) {
 	return null;
 }
 
-const SnakeImageContainer = styled.div`
-	background: radial-gradient(
-		${(props) => props.theme.colors.cardImageBackgroundGradient},
-		transparent
-	);
-
-	@media not all and (max-width: 600px) {
-		padding: 12px;
-		margin: -12px;
-	}
-
-	@media (max-width: 600px) {
-		display: flex;
-		justify-content: center;
-
-		align-self: center;
-		width: 100%;
-	}
-`;
-
-const SnakeImage = styled.img`
-	width: 96px;
-	min-height: 96px;
-	image-rendering: ${(props) => props.pixelated && "pixelated"};
-`;
-
-const SnakeCard = styled(Card)`
-	display: flex;
-	gap: 24px;
-
-	@media (max-width: 600px) {
-		padding: 0;
-		flex-direction: column;
-		gap: 0;
-
-		& > * {
-			padding: 12px;
-		}
-	}
-`;
-
 const SnakesContainer = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -115,25 +75,14 @@ function SnakedexSnake({ snake }) {
 	const image = getSnakeImage(snake);
 
 	return (
-		<SnakeCard>
-			{image && (
-				<SnakeImageContainer>
-					<SnakeImage
-						src={`${SNAKEDEX_BASE}/${image}`}
-						pixelated={snake.pixelated}
-						alt={
-							snake.snakeNumber
-								? `Snake #${snake.snakeNumber}`
-								: "Snake"
-						}
-					/>
-				</SnakeImageContainer>
-			)}
-			<div>
-				<h3>{getSnakeHeader(snake)}</h3>
-				{snake.description && <p>{snake.description}</p>}
-			</div>
-		</SnakeCard>
+		<Card
+			src={`${SNAKEDEX_BASE}/${image}`}
+			pixelated={snake.pixelated}
+			alt={snake.snakeNumber ? `Snake #${snake.snakeNumber}` : "Snake"}
+		>
+			<h3>{getSnakeHeader(snake)}</h3>
+			{snake.description && <p>{snake.description}</p>}
+		</Card>
 	);
 }
 
