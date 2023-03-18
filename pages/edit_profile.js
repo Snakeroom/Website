@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { API_BASE } from "../lib/api";
+import { makeApiRequest } from "../lib/api";
 import { Box, PageTitle } from "../lib/common-style";
 import StateContext from "../lib/state";
 import SubmitButton, { StyledInput } from "../components/submit-button";
@@ -24,10 +24,9 @@ export default function EditProfilePage({ dispatch }) {
 			else payload.append(name, element.value);
 		}
 
-		fetch(`${API_BASE}/identity/@me/profile/`, {
+		makeApiRequest("/identity/@me/profile/", {
 			method: "POST",
 			body: payload,
-			credentials: "include",
 		})
 			.then(() => {
 				dispatch({ type: "mark" });
