@@ -46,7 +46,7 @@ const EventTitle = styled.h3`
 const BigTime = styled.h2`
 	display: none;
 
-	@media (min-width: 900px) {
+	@media (min-width: 1800px) {
 		display: block;
 		position: absolute;
 		font-size: 8em;
