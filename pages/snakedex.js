@@ -68,47 +68,51 @@ const SnakeImageContainer = styled.div`
 		${(props) => props.theme.colors.cardImageBackgroundGradient},
 		transparent
 	);
+	display: block;
+	position: relative;
+	margin: -12px;
+	padding: 12px;
 
-	@media not all and (max-width: 600px) {
-		padding: 12px;
-		margin: -12px;
-	}
-
-	@media (max-width: 600px) {
-		display: flex;
-		justify-content: center;
-
-		align-self: center;
-		width: 100%;
+	@media (min-width: 600px) {
+		float: left;
+		margin-right: 10px;
 	}
 `;
 
-const SnakeImage = styled.img`
+const SnakeTextContainer = styled.div`
+	display: block;
+	margin: 20px 0 0;
+
+	@media (min-width: 600px) {
+		margin: 0 10px;
+	}
+`;
+
+export const SnakeImage = styled.img`
+	display: block;
 	width: 96px;
 	min-height: 96px;
+	margin: auto;
 	image-rendering: ${(props) => props.pixelated && "pixelated"};
 `;
 
 const SnakeCard = styled(Card)`
-	display: flex;
-	gap: 24px;
-
-	@media (max-width: 600px) {
-		padding: 0;
-		flex-direction: column;
-		gap: 0;
-
-		& > * {
-			padding: 12px;
-		}
-	}
+	display: block;
+	margin: 12px 0;
+	overflow: hidden;
+	position: relative;
 `;
 
 const SnakesContainer = styled.div`
-	display: flex;
-	flex-direction: column;
+	display: block;
+`;
 
-	gap: 12px;
+const SnakedexContainer = styled.div`
+	margin: 0 auto;
+
+	@media (min-width: 1200px) {
+		max-width: 1200px;
+	}
 `;
 
 function SnakedexSnake({ snake }) {
@@ -129,10 +133,10 @@ function SnakedexSnake({ snake }) {
 					/>
 				</SnakeImageContainer>
 			)}
-			<div>
+			<SnakeTextContainer>
 				<h3>{getSnakeHeader(snake)}</h3>
 				{snake.description && <p>{snake.description}</p>}
-			</div>
+			</SnakeTextContainer>
 		</SnakeCard>
 	);
 }
@@ -192,17 +196,20 @@ export default function SnakedexPage() {
 			<Box>
 				<h1>Snakedex</h1>
 				<p>{getSnakedexDescription(data)}</p>
+				<StyledInput
+					style={{ float: "right" }}
+					type="text"
+					placeholder="Filter..."
+					value={filter}
+					onChange={(event) => setFilter(event.target.value)}
+				/>
 			</Box>
 			<br />
-			<StyledInput
-				type="text"
-				placeholder="Filter..."
-				value={filter}
-				onChange={(event) => setFilter(event.target.value)}
-			/>
-			{data !== null && (
-				<SnakedexSnakes snakes={data.snakes} filter={filter} />
-			)}
+			<SnakedexContainer>
+				{data !== null && (
+					<SnakedexSnakes snakes={data.snakes} filter={filter} />
+				)}
+			</SnakedexContainer>
 		</>
 	);
 }
