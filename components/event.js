@@ -54,6 +54,7 @@ const BigTime = styled.h2`
 		width: 100%;
 		overflow: hidden;
 		white-space: nowrap;
+		user-select: none;
 		direction: rtl;
 		color: ${(props) => props.theme.colors.primaryVeryMuted};
 	}
@@ -62,7 +63,7 @@ const BigTime = styled.h2`
 function Event({ icon, name, time, children }) {
 	return (
 		<TimelineEntry>
-			<BigTime>{time}</BigTime>
+			<BigTime aria-hidden="true">{time}</BigTime>
 			<EventCard>
 				<EventTitle>
 					<FontAwesomeIcon
