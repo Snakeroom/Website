@@ -40,12 +40,15 @@ export default function IndexPage() {
 			.then((res) => res.json())
 			.then((fetched) => {
 				if (fetched) {
-					setSnakedex(fetched);
+					const homepageSneks = fetched.snakes.filter(
+						(snake) => !snake.homepageHidden
+					);
+					setSnakedex(homepageSneks);
 				}
 			});
 	}, []);
 
-	const snake = snakedex == null ? null : randomOf(snakedex.snakes);
+	const snake = snakedex == null ? null : randomOf(snakedex);
 
 	return (
 		<>
