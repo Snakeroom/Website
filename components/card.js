@@ -51,9 +51,9 @@ const CardContainer = styled.div`
 	}
 `;
 
-function Card({ src, pixelated, alt, children }) {
+function Card({ src, pixelated, alt, className, children }) {
 	return (
-		<CardContainer>
+		<CardContainer className={className}>
 			{src && (
 				<CardImageContainer>
 					<CardImage src={src} pixelated={pixelated} alt={alt} />
