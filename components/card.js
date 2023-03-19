@@ -30,20 +30,7 @@ export const CardImage = styled.img`
 	image-rendering: ${(props) => props.pixelated && "pixelated"};
 `;
 
-function UnstyledCard({ src, pixelated, alt, className, children }) {
-	return (
-		<div className={className}>
-			{src && (
-				<CardImageContainer>
-					<CardImage src={src} pixelated={pixelated} alt={alt} />
-				</CardImageContainer>
-			)}
-			<div>{children}</div>
-		</div>
-	);
-}
-
-const Card = styled(UnstyledCard)`
+const CardContainer = styled.div`
 	padding: 12px;
 	font-size: 1.1em;
 
@@ -63,5 +50,18 @@ const Card = styled(UnstyledCard)`
 		}
 	}
 `;
+
+function Card({ src, pixelated, alt, children }) {
+	return (
+		<CardContainer>
+			{src && (
+				<CardImageContainer>
+					<CardImage src={src} pixelated={pixelated} alt={alt} />
+				</CardImageContainer>
+			)}
+			<div>{children}</div>
+		</CardContainer>
+	);
+}
 
 export default Card;
