@@ -65,24 +65,35 @@ function getSnakeImage(snake) {
 }
 
 const SnakesContainer = styled.div`
-	display: flex;
-	flex-direction: column;
+	display: block;
+`;
 
-	gap: 12px;
+export const SnakedexContainer = styled.div`
+	margin: 0 auto;
+
+	@media (min-width: 1200px) {
+		max-width: 1200px;
+	}
+`;
+
+const SnakeCard = styled(Card)`
+	margin: 12px 0;
+	overflow: hidden;
+	position: relative;
 `;
 
 function SnakedexSnake({ snake }) {
 	const image = getSnakeImage(snake);
 
 	return (
-		<Card
+		<SnakeCard
 			src={`${SNAKEDEX_BASE}/${image}`}
 			pixelated={snake.pixelated}
 			alt={snake.snakeNumber ? `Snake #${snake.snakeNumber}` : "Snake"}
 		>
 			<h3>{getSnakeHeader(snake)}</h3>
 			{snake.description && <p>{snake.description}</p>}
-		</Card>
+		</SnakeCard>
 	);
 }
 
@@ -141,17 +152,20 @@ export default function SnakedexPage() {
 			<Box>
 				<h1>Snakedex</h1>
 				<p>{getSnakedexDescription(data)}</p>
+				<StyledInput
+					style={{ float: "right" }}
+					type="text"
+					placeholder="Filter..."
+					value={filter}
+					onChange={(event) => setFilter(event.target.value)}
+				/>
 			</Box>
 			<br />
-			<StyledInput
-				type="text"
-				placeholder="Filter..."
-				value={filter}
-				onChange={(event) => setFilter(event.target.value)}
-			/>
-			{data !== null && (
-				<SnakedexSnakes snakes={data.snakes} filter={filter} />
-			)}
+			<SnakedexContainer>
+				{data !== null && (
+					<SnakedexSnakes snakes={data.snakes} filter={filter} />
+				)}
+			</SnakedexContainer>
 		</>
 	);
 }

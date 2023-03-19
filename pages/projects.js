@@ -144,14 +144,15 @@ export default function ProjectsPage() {
 							: `There are ${projects.length} projects available.`}
 					</p>
 				)}
+				<StyledInput
+					style={{ float: "right" }}
+					type="text"
+					placeholder="Filter..."
+					value={originalFilter}
+					onChange={(event) => setFilter(event.target.value)}
+				/>
 			</Box>
 			<br />
-			<StyledInput
-				type="text"
-				placeholder="Filter..."
-				value={originalFilter}
-				onChange={(event) => setFilter(event.target.value)}
-			/>
 			{projects !== null && (
 				<ProjectsContainer>
 					{filterArray(

@@ -24,7 +24,8 @@ const CardImageContainer = styled.div`
 	}
 `;
 
-const CardImage = styled.img`
+export const CardImage = styled.img`
+	display: block;
 	width: 96px;
 	image-rendering: ${(props) => props.pixelated && "pixelated"};
 `;
