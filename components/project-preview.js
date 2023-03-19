@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Card } from "../lib/common-style";
-import { makeApiRequest } from "../lib/api";
+import { API_BASE, makeApiRequest } from "../lib/api";
+import Card from "./card";
 import Link from "./link";
 import SubmitButton from "./submit-button";
 
@@ -86,7 +86,13 @@ function ProjectPreview({ project, summary }) {
 	};
 
 	return (
-		<Card>
+		<Card
+			src={
+				"x" in project && "y" in project
+					? `${API_BASE}/y22/projects/${project.uuid}/bitmap`
+					: null
+			}
+		>
 			<ProjectName project={project} summary={summary} />
 			{typeof membershipStatus === "object" && (
 				<p>Membership Status: {`${membershipStatus.text}`}</p>

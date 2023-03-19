@@ -33,6 +33,7 @@ export default function ProjectPage() {
 					setError(true);
 				})
 				.catch((err) => {
+					// eslint-disable-next-line no-console
 					console.error(err);
 					setError(true);
 				});

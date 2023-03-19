@@ -33,6 +33,7 @@ export default function EditProfilePage({ dispatch }) {
 				return router.push("/account");
 			})
 			.catch((err) => {
+				// eslint-disable-next-line no-console
 				console.error(err);
 			});
 	}
