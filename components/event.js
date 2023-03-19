@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styled from "styled-components";
-import { Card } from "../lib/common-style";
+import Card from "./card";
 
 const TimelineEntry = styled.div`
 	margin: 10px 70px 10px auto;

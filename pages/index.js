@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Blurb, Hero } from "../lib/common-style";
 import { makeSnakedexRequest, SNAKEDEX_BASE } from "../lib/api";
-import { SnakeImage } from "./snakedex";
+import { CardImage } from "../components/card";
 
 const BackgroundSnake = styled.div`
 	position: absolute;
@@ -12,7 +12,7 @@ const BackgroundSnake = styled.div`
 	filter: saturate(0) opacity(0.05);
 `;
 
-const LazySnakeImage = styled(SnakeImage)`
+const LazySnakeImage = styled(CardImage)`
 	width: 500px;
 	height: auto;
 	animation: fade-in linear 0.5s;

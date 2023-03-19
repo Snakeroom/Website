@@ -2,7 +2,8 @@ import Head from "next/head";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { makeSnakedexRequest, SNAKEDEX_BASE } from "../lib/api";
-import { Box, Card } from "../lib/common-style";
+import { Box } from "../lib/common-style";
+import Card from "../components/card";
 import { StyledInput } from "../components/submit-button";
 import useFilter from "../lib/hooks/useFilter";
 import { isMatchingString, filterArray } from "../lib/filter";
@@ -63,51 +64,11 @@ function getSnakeImage(snake) {
 	return null;
 }
 
-const SnakeImageContainer = styled.div`
-	background: radial-gradient(
-		${(props) => props.theme.colors.cardImageBackgroundGradient},
-		transparent
-	);
-	display: block;
-	position: relative;
-	margin: -12px;
-	padding: 12px;
-
-	@media (min-width: 600px) {
-		float: left;
-		margin-right: 10px;
-	}
-`;
-
-const SnakeTextContainer = styled.div`
-	display: block;
-	margin: 20px 0 0;
-
-	@media (min-width: 600px) {
-		margin: 0 10px;
-	}
-`;
-
-export const SnakeImage = styled.img`
-	display: block;
-	width: 96px;
-	min-height: 96px;
-	margin: auto;
-	image-rendering: ${(props) => props.pixelated && "pixelated"};
-`;
-
-const SnakeCard = styled(Card)`
-	display: block;
-	margin: 12px 0;
-	overflow: hidden;
-	position: relative;
-`;
-
 const SnakesContainer = styled.div`
 	display: block;
 `;
 
-const SnakedexContainer = styled.div`
+export const SnakedexContainer = styled.div`
 	margin: 0 auto;
 
 	@media (min-width: 1200px) {
@@ -115,28 +76,23 @@ const SnakedexContainer = styled.div`
 	}
 `;
 
+const SnakeCard = styled(Card)`
+	margin: 12px 0;
+	overflow: hidden;
+	position: relative;
+`;
+
 function SnakedexSnake({ snake }) {
 	const image = getSnakeImage(snake);
 
 	return (
-		<SnakeCard>
-			{image && (
-				<SnakeImageContainer>
-					<SnakeImage
-						src={`${SNAKEDEX_BASE}/${image}`}
-						pixelated={snake.pixelated}
-						alt={
-							snake.snakeNumber
-								? `Snake #${snake.snakeNumber}`
-								: "Snake"
-						}
-					/>
-				</SnakeImageContainer>
-			)}
-			<SnakeTextContainer>
-				<h3>{getSnakeHeader(snake)}</h3>
-				{snake.description && <p>{snake.description}</p>}
-			</SnakeTextContainer>
+		<SnakeCard
+			src={`${SNAKEDEX_BASE}/${image}`}
+			pixelated={snake.pixelated}
+			alt={snake.snakeNumber ? `Snake #${snake.snakeNumber}` : "Snake"}
+		>
+			<h3>{getSnakeHeader(snake)}</h3>
+			{snake.description && <p>{snake.description}</p>}
 		</SnakeCard>
 	);
 }
