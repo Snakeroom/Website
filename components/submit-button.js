@@ -1,8 +1,12 @@
 import styled from "styled-components";
 
-export const StyledInput = styled.input`
+export const InlineStyledInput = styled.input`
 	border: 1px solid ${(props) => props.theme.colors.primary};
 	border-radius: 2px;
+	padding: 2px;
+`;
+
+export const StyledInput = styled(InlineStyledInput)`
 	margin: 10px 0;
 	padding: 10px;
 	display: block;

@@ -85,14 +85,15 @@ function ProjectPreview({ project, summary }) {
 		}
 	};
 
+	const [width, height] = project.dimensions;
+
+	const imageUrl =
+		width !== null && height !== null
+			? `${API_BASE}/y22/projects/${project.uuid}/bitmap`
+			: null;
+
 	return (
-		<Card
-			src={
-				"x" in project && "y" in project
-					? `${API_BASE}/y22/projects/${project.uuid}/bitmap`
-					: null
-			}
-		>
+		<Card src={imageUrl} pixelated>
 			<ProjectName project={project} summary={summary} />
 			{typeof membershipStatus === "object" && (
 				<p>Membership Status: {`${membershipStatus.text}`}</p>

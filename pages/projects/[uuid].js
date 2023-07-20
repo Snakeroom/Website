@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { PageTitle } from "../../lib/common-style";
 import { makeApiRequest } from "../../lib/api";
-import ProjectPreview from "../../components/project-preview";
+import ProjectPanel from "../../components/project-panel";
 import NotFoundPage from "../404";
 
 export default function ProjectPage() {
@@ -16,18 +16,12 @@ export default function ProjectPage() {
 		if (router.isReady) {
 			const { uuid } = router.query;
 
-			makeApiRequest("/y22/projects")
+			makeApiRequest(`/y22/projects/${uuid}`)
 				.then((res) => res.json())
 				.then((data) => {
-					if (data.projects) {
-						const foundProject = data.projects.find((p) => {
-							return p.uuid === uuid;
-						});
-
-						if (foundProject) {
-							setProject(foundProject);
-							return;
-						}
+					if (data.project) {
+						setProject(data.project);
+						return;
 					}
 
 					setError(true);
@@ -53,7 +47,7 @@ export default function ProjectPage() {
 			</Head>
 			<PageTitle>Projects</PageTitle>
 			<br />
-			{project ? <ProjectPreview project={project} /> : <p>Loading...</p>}
+			{project ? <ProjectPanel project={project} /> : <p>Loading...</p>}
 		</>
 	);
 }
