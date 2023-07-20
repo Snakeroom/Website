@@ -47,7 +47,11 @@ export default function ProjectPage() {
 			</Head>
 			<PageTitle>Projects</PageTitle>
 			<br />
-			{project ? <ProjectPanel project={project} /> : <p>Loading...</p>}
+			{project ? (
+				<ProjectPanel initialProject={project} />
+			) : (
+				<p>Loading...</p>
+			)}
 		</>
 	);
 }

@@ -1,9 +1,11 @@
 import styled from "styled-components";
-import { API_BASE } from "../lib/api";
+import { useState, useCallback } from "react";
+import { API_BASE, makeApiRequest } from "../lib/api";
 import Card from "./card";
 import ProjectPreview from "./project-preview";
 import { InlineStyledInput } from "./submit-button";
 import Link from "./link";
+import SubmitRow from "./submit-row";
 
 const ProjectPanelContainer = styled.div`
 	margin: 0 auto;
@@ -31,7 +33,57 @@ function isNonEmptyArray(array) {
 	return Array.isArray(array) && array.length > 0;
 }
 
-function DivisionCoordinates({ division }) {
+function getNumberOrDefault(value, defaultValue = 0) {
+	return Number.isNaN(value) ? defaultValue : value;
+}
+
+function DivisionOrigin({ project, division, updateDivision }) {
+	const [x, y] = division.origin;
+
+	if (!project.can_edit) {
+		return (
+			<>
+				({x}, {y})
+			</>
+		);
+	}
+
+	return (
+		<>
+			(
+			<InlineStyledInput
+				type="number"
+				value={division.origin[0]}
+				onChange={(event) => {
+					updateDivision({
+						...division,
+						origin: [
+							getNumberOrDefault(event.target.valueAsNumber),
+							division.origin[1],
+						],
+					});
+				}}
+			/>
+			,{" "}
+			<InlineStyledInput
+				type="number"
+				value={division.origin[1]}
+				onChange={(event) => {
+					updateDivision({
+						...division,
+						origin: [
+							division.origin[0],
+							getNumberOrDefault(event.target.valueAsNumber),
+						],
+					});
+				}}
+			/>
+			)
+		</>
+	);
+}
+
+function DivisionCoordinates({ project, division, updateDivision }) {
 	const [x, y] = division.origin;
 	const [width, height] = division.dimensions;
 
@@ -42,8 +94,14 @@ function DivisionCoordinates({ division }) {
 		return (
 			<>
 				<InputBlock>
-					Coordinates: ({x}, {y}) <InputNote>(top left)</InputNote> to
-					({maxX}, {maxY}) <InputNote>(bottom right)</InputNote>
+					Coordinates:{" "}
+					<DivisionOrigin
+						project={project}
+						division={division}
+						updateDivision={updateDivision}
+					/>{" "}
+					<InputNote>(top left)</InputNote> to ({maxX}, {maxY}){" "}
+					<InputNote>(bottom right)</InputNote>
 				</InputBlock>
 				<InputBlock>
 					Dimensions: {width}×{height}
@@ -54,12 +112,18 @@ function DivisionCoordinates({ division }) {
 
 	return (
 		<InputBlock>
-			Offset: ({x}, {y}) <InputNote>(top left)</InputNote>
+			Offset:{" "}
+			<DivisionOrigin
+				project={project}
+				division={division}
+				updateDivision={updateDivision}
+			/>{" "}
+			<InputNote>(top left)</InputNote>
 		</InputBlock>
 	);
 }
 
-function DivisionCard({ project, division }) {
+function DivisionCard({ project, division, updateDivision }) {
 	const [width, height] = division.dimensions;
 
 	const imageUrl =
@@ -69,15 +133,37 @@ function DivisionCard({ project, division }) {
 
 	return (
 		<Card src={imageUrl} pixelated>
-			<h4>{division.name}</h4>
-			<DivisionCoordinates division={division} />
+			{project.can_edit ? (
+				<InlineStyledInput
+					value={division.name}
+					onChange={(event) => {
+						updateDivision({
+							...division,
+							name: event.target.value,
+						});
+					}}
+				/>
+			) : (
+				<h4>{division.name}</h4>
+			)}
+			<DivisionCoordinates
+				project={project}
+				division={division}
+				updateDivision={updateDivision}
+			/>
 			<InputBlock>
 				<label>
 					Enabled:{" "}
 					<InlineStyledInput
 						type="checkbox"
-						defaultChecked={division.enabled}
-						disabled
+						checked={division.enabled}
+						onChange={(event) => {
+							updateDivision({
+								...division,
+								enabled: event.target.checked,
+							});
+						}}
+						disabled={!project.can_edit}
 					/>{" "}
 					<InputNote>
 						(disable divisions to stop directing users to contribute
@@ -87,7 +173,22 @@ function DivisionCard({ project, division }) {
 			</InputBlock>
 			<InputBlock>
 				<label>
-					Priority: {division.priority}{" "}
+					Priority:{" "}
+					<InlineStyledInput
+						type="number"
+						min={0}
+						max={100}
+						value={division.priority}
+						onChange={(event) => {
+							updateDivision({
+								...division,
+								priority: getNumberOrDefault(
+									event.target.valueAsNumber
+								),
+							});
+						}}
+						disabled={!project.can_edit}
+					/>{" "}
 					<InputNote>(a higher number receives priority)</InputNote>
 				</label>
 			</InputBlock>
@@ -102,7 +203,21 @@ function DivisionCard({ project, division }) {
 	);
 }
 
-export default function ProjectPanel({ project }) {
+export default function ProjectPanel({ initialProject }) {
+	const [project, setProject] = useState(initialProject);
+
+	const updateDivision = useCallback(
+		(division) => {
+			setProject({
+				...project,
+				divisions: project.divisions.map((d) => {
+					return d.uuid === division.uuid ? division : d;
+				}),
+			});
+		},
+		[project]
+	);
+
 	return (
 		<ProjectPanelContainer>
 			<ProjectPreview project={project} />
@@ -114,9 +229,34 @@ export default function ProjectPanel({ project }) {
 							key={division.uuid}
 							project={project}
 							division={division}
+							updateDivision={updateDivision}
 						/>
 					))}
 				</>
+			) : null}
+			{project.can_edit ? (
+				<SubmitRow
+					name="Save Changes"
+					onClick={() =>
+						Promise.all(
+							project.divisions.map((division) =>
+								makeApiRequest(
+									`/y22/projects/${project.uuid}/divisions/${division.uuid}`,
+									{
+										method: "POST",
+										body: JSON.stringify(division),
+									}
+								)
+									.then((res) => (res.ok ? {} : res.json()))
+									.then((json) => {
+										if (json.error) {
+											throw new Error(json.error);
+										}
+									})
+							)
+						)
+					}
+				/>
 			) : null}
 		</ProjectPanelContainer>
 	);
