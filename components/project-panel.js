@@ -203,6 +203,20 @@ function DivisionCard({ project, division, updateDivision }) {
 	);
 }
 
+const roles = new Map()
+	.set("owner", "Owner")
+	.set("manager", "Manager")
+	.set("user", "User");
+
+function MemberCard({ member }) {
+	return (
+		<Card>
+			<h4>{member.username}</h4>
+			<InputBlock>Role: {roles.get(member.role)}</InputBlock>
+		</Card>
+	);
+}
+
 export default function ProjectPanel({ initialProject }) {
 	const [project, setProject] = useState(initialProject);
 
@@ -231,6 +245,14 @@ export default function ProjectPanel({ initialProject }) {
 							division={division}
 							updateDivision={updateDivision}
 						/>
+					))}
+				</>
+			) : null}
+			{isNonEmptyArray(project.members) ? (
+				<>
+					<h3>Members</h3>
+					{project.members.map((member) => (
+						<MemberCard key={member.uid} member={member} />
 					))}
 				</>
 			) : null}
