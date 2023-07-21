@@ -31,7 +31,7 @@ const SubmitRowNag = styled.div`
 	border-radius: 8px;
 `;
 
-export default function SubmitRow({ name, onClick }) {
+export default function SubmitRow({ name, onClick, disabled }) {
 	const [error, setError] = useState(null);
 
 	const callback = useCallback(async (event) => {
@@ -48,7 +48,12 @@ export default function SubmitRow({ name, onClick }) {
 
 	return (
 		<SubmitRowBox>
-			<SubmitButton type="button" value={name} onClick={callback} />
+			<SubmitButton
+				type="button"
+				value={name}
+				onClick={callback}
+				disabled={disabled}
+			/>
 			{error === null ? null : <SubmitRowNag>{error}</SubmitRowNag>}
 		</SubmitRowBox>
 	);

@@ -342,6 +342,7 @@ function MemberCard({ member }) {
 function SaveChangesRow({
 	project,
 	divisionUploads,
+	dirty,
 	setProject,
 	setDivisionUploads,
 }) {
@@ -429,12 +430,43 @@ function SaveChangesRow({
 		setDivisionUploads(newUploads);
 	});
 
-	return <SubmitRow name="Save Changes" onClick={onClick} />;
+	return (
+		<SubmitRow name="Save Changes" onClick={onClick} disabled={!dirty} />
+	);
+}
+
+function isDirty(project, initialProject, divisionUploads) {
+	// If a division image will be uploaded, then there are modifications
+	if (Object.keys(divisionUploads).length > 0) {
+		return true;
+	}
+
+	// If any division has changed, then there are modifications
+	return project.divisions.some((division) => {
+		const initialDivision = initialProject.divisions.find(
+			(d) => d.uuid === division.uuid
+		);
+
+		// Newly added division
+		if (initialDivision === undefined) return true;
+
+		// Division with changed values
+		if (division.name !== initialDivision.name) return true;
+		if (division.priority !== initialDivision.priority) return true;
+		if (division.enabled !== initialDivision.enabled) return true;
+
+		if (division.origin[0] !== initialDivision.origin[0]) return true;
+		if (division.origin[1] !== initialDivision.origin[1]) return true;
+
+		return false;
+	});
 }
 
 export default function ProjectPanel({ initialProject }) {
 	const [project, setProject] = useState(initialProject);
 	const [divisionUploads, setDivisionUploads] = useState({});
+
+	const dirty = isDirty(project, initialProject, divisionUploads);
 
 	const updateDivision = useCallback(
 		(division) => {
@@ -497,6 +529,7 @@ export default function ProjectPanel({ initialProject }) {
 				<SaveChangesRow
 					project={project}
 					divisionUploads={divisionUploads}
+					dirty={dirty}
 					setProject={setProject}
 					setDivisionUploads={setDivisionUploads}
 				/>

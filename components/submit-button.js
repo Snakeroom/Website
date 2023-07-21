@@ -25,5 +25,10 @@ const SubmitButton = styled(StyledInput)`
 		background-color: ${(props) => props.theme.colors.background};
 		color: ${(props) => props.theme.colors.primary};
 	}
+
+	&:disabled {
+		background-color: ${(props) => props.theme.colors.backgroundMuted};
+		color: ${(props) => props.theme.colors.primaryMuted};
+	}
 `;
 export default SubmitButton;
