@@ -25,6 +25,8 @@
 			"error",
 			{
 				"controlComponents": [
+					"HiddenInput",
+					"InlineStyledInput",
 					"StyledInput"
 				]
 			}
