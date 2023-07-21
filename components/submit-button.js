@@ -1,7 +1,10 @@
 import styled from "styled-components";
 
 export const InlineStyledInput = styled.input`
-	border: 1px solid ${(props) => props.theme.colors.primary};
+	&:not([type="file"]) {
+		border: 1px solid ${(props) => props.theme.colors.primary};
+	}
+
 	border-radius: 2px;
 	padding: 2px;
 `;
