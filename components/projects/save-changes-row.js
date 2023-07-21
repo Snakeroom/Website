@@ -15,7 +15,7 @@ export default function SaveChangesRow({
 
 		// eslint-disable-next-line no-restricted-syntax
 		for await (const division of project.divisions) {
-			if (division.create) {
+			if (division.create && !division.delete) {
 				const res = await makeApiRequest(
 					`/y22/projects/${project.uuid}/create_division`,
 					{
@@ -39,24 +39,53 @@ export default function SaveChangesRow({
 		const newUploads = { ...divisionUploads };
 
 		// eslint-disable-next-line no-restricted-syntax
-		for await (const [division, file] of Object.entries(divisionUploads)) {
-			const uuid = remappedUuids.get(division);
-
-			const res = await makeApiRequest(
-				`/y22/projects/${project.uuid}/divisions/${uuid}/bitmap`,
-				{
-					method: "POST",
-					body: file,
-				}
+		for await (const [divisionUuid, file] of Object.entries(
+			divisionUploads
+		)) {
+			const division = project.divisions.find(
+				(d) => d.uuid === divisionUuid
 			);
 
-			if (res.ok) {
-				delete newUploads[division];
-			} else {
-				const json = await res.json();
+			if (!division.delete) {
+				const uuid = remappedUuids.get(division.uuid);
 
-				if (json.error) {
-					throw new Error(json.error);
+				const res = await makeApiRequest(
+					`/y22/projects/${project.uuid}/divisions/${uuid}/bitmap`,
+					{
+						method: "POST",
+						body: file,
+					}
+				);
+
+				if (res.ok) {
+					delete newUploads[division];
+				} else {
+					const json = await res.json();
+
+					if (json.error) {
+						throw new Error(json.error);
+					}
+				}
+			}
+		}
+
+		// Delete divisions
+		// eslint-disable-next-line no-restricted-syntax
+		for await (const division of project.divisions) {
+			if (!division.create && division.delete) {
+				const res = await makeApiRequest(
+					`/y22/projects/${project.uuid}/divisions/${division.uuid}`,
+					{
+						method: "DELETE",
+					}
+				);
+
+				if (!res.ok) {
+					const json = await res.json();
+
+					if (json.error) {
+						throw new Error(json.error);
+					}
 				}
 			}
 		}
@@ -66,22 +95,24 @@ export default function SaveChangesRow({
 
 		// eslint-disable-next-line no-restricted-syntax
 		for await (const division of project.divisions) {
-			const uuid = remappedUuids.get(division.uuid);
+			if (!division.delete) {
+				const uuid = remappedUuids.get(division.uuid);
 
-			const res = await makeApiRequest(
-				`/y22/projects/${project.uuid}/divisions/${uuid}`,
-				{
-					method: "POST",
-					body: JSON.stringify(division),
+				const res = await makeApiRequest(
+					`/y22/projects/${project.uuid}/divisions/${uuid}`,
+					{
+						method: "POST",
+						body: JSON.stringify(division),
+					}
+				);
+
+				const json = await res.json();
+
+				if (res.ok) {
+					newDivisions.push(json.division);
+				} else if (json.error) {
+					throw new Error(json.error);
 				}
-			);
-
-			const json = await res.json();
-
-			if (res.ok) {
-				newDivisions.push(json.division);
-			} else if (json.error) {
-				throw new Error(json.error);
 			}
 		}
 

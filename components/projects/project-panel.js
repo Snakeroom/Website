@@ -34,6 +34,9 @@ function isDirty(project, initialProject, divisionUploads) {
 		// Newly added division
 		if (initialDivision === undefined) return true;
 
+		// Deleted division
+		if (division.delete) return true;
+
 		// Division with changed values
 		if (division.name !== initialDivision.name) return true;
 		if (division.priority !== initialDivision.priority) return true;

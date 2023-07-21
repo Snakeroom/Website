@@ -1,9 +1,15 @@
 import styled from "styled-components";
 import { useState, useRef, useEffect } from "react";
+import {
+	faDownload,
+	faTrash,
+	faTrashArrowUp,
+	faUpload,
+} from "@fortawesome/free-solid-svg-icons";
 import { API_BASE } from "../../lib/api";
 import Card from "../card";
 import SubmitButton, { InlineStyledInput } from "../submit-button";
-import Link from "../link";
+import { InputIconButton, LinkIconButton } from "../icon-button";
 
 export const InputBlock = styled.p`
 	margin-top: 10px;
@@ -109,10 +115,36 @@ function DivisionCoordinates({
 	);
 }
 
-function ImageManagementBlock({
+function DeleteButton({ division, updateDivision }) {
+	return (
+		<InputIconButton
+			icon={division.delete ? faTrashArrowUp : faTrash}
+			danger
+			type="checkbox"
+			checked={division.delete ?? false}
+			onChange={() => {
+				updateDivision({
+					...division,
+					delete: !division.delete,
+				});
+			}}
+		>
+			{division.delete ? "Cancel Deletion" : "Delete"}
+		</InputIconButton>
+	);
+}
+
+const ActionRowBlock = styled(InputBlock)`
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0 12px;
+`;
+
+function ActionsBlock({
 	imageUrl,
 	division,
 	divisionUpload,
+	updateDivision,
 	setDivisionUpload,
 }) {
 	const uploadRef = useRef(null);
@@ -130,20 +162,20 @@ function ImageManagementBlock({
 	}, [divisionUpload]);
 
 	return (
-		<InputBlock>
+		<ActionRowBlock>
 			{imageUrl == null ? null : (
-				<>
-					<Link href={`${imageUrl}?download=1`}>
-						Download Division Image
-					</Link>{" "}
-					•{" "}
-				</>
+				<LinkIconButton
+					icon={faDownload}
+					href={`${imageUrl}?download=1`}
+				>
+					Download Image
+				</LinkIconButton>
 			)}
-			Replace Division Image:{" "}
-			<InlineStyledInput
+			<InputIconButton
+				icon={faUpload}
 				type="file"
 				accept="image/png,.png"
-				ref={uploadRef}
+				inputRef={uploadRef}
 				onChange={(event) => {
 					const file = event.target.files?.[0];
 
@@ -151,8 +183,11 @@ function ImageManagementBlock({
 						setDivisionUpload(division, file);
 					}
 				}}
-			/>
-		</InputBlock>
+			>
+				{imageUrl || divisionUpload ? "Replace" : "Upload"} Image
+			</InputIconButton>
+			<DeleteButton division={division} updateDivision={updateDivision} />
+		</ActionRowBlock>
 	);
 }
 
@@ -256,10 +291,11 @@ function DivisionCard({
 				</label>
 			</InputBlock>
 			{project.can_edit ? (
-				<ImageManagementBlock
+				<ActionsBlock
 					imageUrl={imageUrl}
 					division={division}
 					divisionUpload={divisionUpload}
+					updateDivision={updateDivision}
 					setDivisionUpload={setDivisionUpload}
 				/>
 			) : null}
