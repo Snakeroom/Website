@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useState, useCallback, useRef, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import { API_BASE, makeApiRequest } from "../lib/api";
 import Card from "./card";
 import ProjectPreview from "./project-preview";
-import { InlineStyledInput } from "./submit-button";
+import SubmitButton, { InlineStyledInput } from "./submit-button";
 import Link from "./link";
 import SubmitRow from "./submit-row";
 
@@ -286,6 +287,44 @@ function DivisionCard({
 	);
 }
 
+function DivisionsRow({
+	project,
+	divisionUploads,
+	updateDivision,
+	setDivisionUpload,
+	addDivision,
+}) {
+	if (!Array.isArray(project.divisions)) {
+		return null;
+	}
+
+	return (
+		<>
+			<h3>Divisions</h3>
+			{project.divisions.map((division) => (
+				<DivisionCard
+					key={division.uuid}
+					project={project}
+					division={division}
+					divisionUpload={divisionUploads[division.uuid]}
+					updateDivision={updateDivision}
+					setDivisionUpload={setDivisionUpload}
+				/>
+			))}
+			{project.can_edit ? (
+				<div>
+					<SubmitButton
+						style={{ float: "right" }}
+						type="button"
+						value="Add Division"
+						onClick={addDivision}
+					/>
+				</div>
+			) : null}
+		</>
+	);
+}
+
 const roles = new Map()
 	.set("owner", "Owner")
 	.set("manager", "Manager")
@@ -307,13 +346,40 @@ function SaveChangesRow({
 	setDivisionUploads,
 }) {
 	const onClick = useCallback(async () => {
+		// Create new divisions
+		const remappedUuids = new Map();
+
+		// eslint-disable-next-line no-restricted-syntax
+		for await (const division of project.divisions) {
+			if (division.create) {
+				const res = await makeApiRequest(
+					`/y22/projects/${project.uuid}/create_division`,
+					{
+						method: "POST",
+					}
+				);
+
+				const json = await res.json();
+
+				if (res.ok) {
+					remappedUuids.set(division.uuid, json.uuid);
+				} else if (json.error) {
+					throw new Error(json.error);
+				}
+			} else {
+				remappedUuids.set(division.uuid, division.uuid);
+			}
+		}
+
 		// Update division images
 		const newUploads = { ...divisionUploads };
 
 		// eslint-disable-next-line no-restricted-syntax
 		for await (const [division, file] of Object.entries(divisionUploads)) {
+			const uuid = remappedUuids.get(division);
+
 			const res = await makeApiRequest(
-				`/y22/projects/${project.uuid}/divisions/${division}/bitmap`,
+				`/y22/projects/${project.uuid}/divisions/${uuid}/bitmap`,
 				{
 					method: "POST",
 					body: file,
@@ -336,8 +402,10 @@ function SaveChangesRow({
 
 		// eslint-disable-next-line no-restricted-syntax
 		for await (const division of project.divisions) {
+			const uuid = remappedUuids.get(division.uuid);
+
 			const res = await makeApiRequest(
-				`/y22/projects/${project.uuid}/divisions/${division.uuid}`,
+				`/y22/projects/${project.uuid}/divisions/${uuid}`,
 				{
 					method: "POST",
 					body: JSON.stringify(division),
@@ -390,24 +458,33 @@ export default function ProjectPanel({ initialProject }) {
 		[divisionUploads]
 	);
 
+	const addDivision = useCallback(() => {
+		setProject({
+			...project,
+			divisions: [
+				...project.divisions,
+				{
+					create: true,
+					uuid: uuidv4(),
+					origin: [0, 0],
+					dimensions: [null, null],
+					priority: 0,
+					enabled: true,
+				},
+			],
+		});
+	}, [project]);
+
 	return (
 		<ProjectPanelContainer>
 			<ProjectPreview project={project} />
-			{isNonEmptyArray(project.divisions) ? (
-				<>
-					<h3>Divisions</h3>
-					{project.divisions.map((division) => (
-						<DivisionCard
-							key={division.uuid}
-							project={project}
-							division={division}
-							divisionUpload={divisionUploads[division.uuid]}
-							updateDivision={updateDivision}
-							setDivisionUpload={setDivisionUpload}
-						/>
-					))}
-				</>
-			) : null}
+			<DivisionsRow
+				project={project}
+				divisionUploads={divisionUploads}
+				updateDivision={updateDivision}
+				setDivisionUpload={setDivisionUpload}
+				addDivision={addDivision}
+			/>
 			{isNonEmptyArray(project.members) ? (
 				<>
 					<h3>Members</h3>
