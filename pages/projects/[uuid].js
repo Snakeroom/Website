@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { PageTitle } from "../../lib/common-style";
 import { makeApiRequest } from "../../lib/api";
-import ProjectPanel from "../../components/project-panel";
+import ProjectPanel from "../../components/projects/project-panel";
 import NotFoundPage from "../404";
 
 export default function ProjectPage() {

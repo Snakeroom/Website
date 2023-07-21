@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { API_BASE, makeApiRequest } from "../lib/api";
-import Card from "./card";
-import Link from "./link";
-import SubmitButton from "./submit-button";
+import { API_BASE, makeApiRequest } from "../../lib/api";
+import Card from "../card";
+import Link from "../link";
+import SubmitButton from "../submit-button";
 
 class MembershipStatus {
 	static Joining = new MembershipStatus("Joining...");

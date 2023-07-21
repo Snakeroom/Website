@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Box, PageTitle } from "../../lib/common-style";
 import { makeApiRequest } from "../../lib/api";
-import ProjectPreview from "../../components/project-preview";
+import ProjectPreview from "../../components/projects/project-preview";
 import { StyledInput } from "../../components/submit-button";
 import useFilter from "../../lib/hooks/useFilter";
 import { isMatchingString, filterArray } from "../../lib/filter";
