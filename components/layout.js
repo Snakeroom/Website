@@ -134,7 +134,7 @@ function Footer() {
 			<FooterLogo />
 			<FooterContent>
 				<FooterCredit>
-					&copy; 2022{" "}
+					&copy; 2024{" "}
 					<Link href="https://github.com/Snakeroom/Website/blob/master/LICENSE">
 						snakeroom.org contributors
 					</Link>
