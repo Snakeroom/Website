@@ -1,18 +1,8 @@
-import Head from "next/head";
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { Box, PageTitle } from "../lib/common-style";
-import { API_BASE, makeApiRequest } from "../lib/api";
-import Card from "../components/card";
-import SubmitButton, { StyledInput } from "../components/submit-button";
-import useFilter from "../lib/hooks/useFilter";
-import { isMatchingString, filterArray } from "../lib/filter";
-
-const ProjectsContainer = styled.div`
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 10px;
-`;
+import { useState } from "react";
+import { API_BASE, makeApiRequest } from "../../lib/api";
+import Card from "../card";
+import Link from "../link";
+import SubmitButton from "../submit-button";
 
 class MembershipStatus {
 	static Joining = new MembershipStatus("Joining...");
@@ -31,7 +21,21 @@ class MembershipStatus {
 	}
 }
 
-function ProjectPreview({ project }) {
+function ProjectName({ project, summary }) {
+	const name = project.name || "Unnamed Project";
+
+	if (summary) {
+		return (
+			<h3>
+				<Link href={`/projects/${project.uuid}`}>{name}</Link>
+			</h3>
+		);
+	}
+
+	return <h3>{name}</h3>;
+}
+
+function ProjectPreview({ project, summary }) {
 	const initialMembershipStatus = () => {
 		if (typeof project.joined === "boolean") {
 			return project.joined
@@ -81,15 +85,16 @@ function ProjectPreview({ project }) {
 		}
 	};
 
+	const [width, height] = project.dimensions;
+
+	const imageUrl =
+		width !== null && height !== null
+			? `${API_BASE}/y22/projects/${project.uuid}/bitmap`
+			: null;
+
 	return (
-		<Card
-			src={
-				"x" in project && "y" in project
-					? `${API_BASE}/y22/projects/${project.uuid}/bitmap`
-					: null
-			}
-		>
-			<h3>{project.name || "Unnamed Project"}</h3>
+		<Card src={imageUrl} pixelated>
+			<ProjectName project={project} summary={summary} />
 			{typeof membershipStatus === "object" && (
 				<p>Membership Status: {`${membershipStatus.text}`}</p>
 			)}
@@ -114,63 +119,4 @@ function ProjectPreview({ project }) {
 	);
 }
 
-export default function ProjectsPage() {
-	const [projects, setProjects] = useState(null);
-	const [originalFilter, setFilter] = useFilter();
-
-	useEffect(() => {
-		makeApiRequest("/y22/projects")
-			.then((res) => res.json())
-			.then((data) => {
-				if (data.projects) {
-					setProjects(data.projects);
-				}
-			});
-	}, []);
-
-	return (
-		<>
-			<Head>
-				<title>Projects - The Snakeroom</title>
-			</Head>
-			<Box>
-				<PageTitle>Projects</PageTitle>
-				{projects === null ? (
-					<p>Loading projects</p>
-				) : (
-					<p>
-						{projects.length === 1
-							? "There is 1 project available."
-							: `There are ${projects.length} projects available.`}
-					</p>
-				)}
-				<StyledInput
-					style={{ float: "right" }}
-					type="text"
-					placeholder="Filter..."
-					value={originalFilter}
-					onChange={(event) => setFilter(event.target.value)}
-				/>
-			</Box>
-			<br />
-			{projects !== null && (
-				<ProjectsContainer>
-					{filterArray(
-						projects,
-						originalFilter,
-						(project, filter) => {
-							return isMatchingString(project.name, filter);
-						}
-					).map((project) => {
-						return (
-							<ProjectPreview
-								key={project.uuid}
-								project={project}
-							/>
-						);
-					})}
-				</ProjectsContainer>
-			)}
-		</>
-	);
-}
+export default ProjectPreview;
