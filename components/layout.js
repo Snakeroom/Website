@@ -36,7 +36,6 @@ const HeaderTitle = styled.h1``;
 
 const HeaderNav = styled.nav`
 	display: flex;
-	margin-left: auto;
 
 	ul {
 		display: flex;
@@ -55,6 +54,14 @@ const HeaderNav = styled.nav`
 		flex-direction: column;
 		margin-left: 0;
 		margin-top: 1rem;
+	}
+`;
+
+const ButtonGroup = styled.div`
+	margin-left: auto;
+
+	& > *:not(:last-child) {
+		margin-right: 0.7rem;
 	}
 `;
 
@@ -88,12 +95,12 @@ function Header() {
 					<li>
 						<HeaderNavLink href="/sneknet">Sneknet</HeaderNavLink>
 					</li>
-					<li>
-						<ThemeSwitcher />
-						<AccountDropdown />
-					</li>
 				</ul>
 			</HeaderNav>
+			<ButtonGroup>
+				<ThemeSwitcher />
+				<AccountDropdown />
+			</ButtonGroup>
 		</HeaderContainer>
 	);
 }
