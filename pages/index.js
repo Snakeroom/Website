@@ -9,11 +9,13 @@ const BackgroundSnake = styled.div`
 	position: absolute;
 	bottom: 0;
 	left: 5%;
+	width: 90%;
 	filter: saturate(0) opacity(0.05);
 `;
 
 const LazySnakeImage = styled(CardImage)`
 	width: 500px;
+	max-width: 100%;
 	height: auto;
 	animation: fade-in linear 0.5s;
 
